@@ -17,6 +17,18 @@ const userSchema = new Schema(
       type: String,
       required: [true, 'Password is required'],
     },
+    followers: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
+    following: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
   },
   {
     virtuals: {
