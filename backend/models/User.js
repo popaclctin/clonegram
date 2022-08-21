@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 const userSchema = new Schema(
   {
@@ -41,6 +43,17 @@ const userSchema = new Schema(
     timestamps: true,
   }
 );
+
+// Hash the password
+userSchema.pre('save', async function (next) {
+  this.password = await bcrypt.hash(this.password, saltRounds);
+  next();
+});
+
+// Compare the password
+userSchema.methods.comparePassword = async function (userPassword) {
+  return await bcrypt.compare(this.password, userPassword);
+};
 
 const User = mongoose.model('User', userSchema);
 
