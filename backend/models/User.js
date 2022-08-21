@@ -17,10 +17,6 @@ const userSchema = new Schema(
       type: String,
       required: [true, 'Password is required'],
     },
-    createdAt: {
-      type: Date,
-      default: Date.now,
-    },
   },
   {
     virtuals: {
@@ -30,6 +26,7 @@ const userSchema = new Schema(
         },
       },
     },
+    timestamps: true,
   }
 );
 
