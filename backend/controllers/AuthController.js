@@ -19,24 +19,34 @@ async function login(req, res) {
   const { email, password } = req.body;
 
   //find the account
-  const existingUser = await User.findOne({ email, username }, 'password');
+  const user = await User.findOne({ email, username }, 'password');
 
-  const checkPassword =
-    existingUser && (await existingUser.comparePassword(password));
+  const checkPassword = user && (await user.comparePassword(password));
 
-  if (!existingUser || !checkPassword) {
+  if (!user || !checkPassword) {
     return res.status(400).send('Invalid email or password');
   }
 
-  //generate a token valid for 1 hour
-  const token = jwt.sign({ id: existingUser._id }, jwtSecret, {
-    expiresIn: '1h',
-  });
+  const payload = {
+    id: user._id,
+    username: user.username,
+  };
 
-  res.status(200).json({
-    status: 'success',
-    data: { token, user: existingUser },
-  });
+  //generate a token valid for 1 hour
+  jwt.sign(
+    payload,
+    jwtSecret,
+    {
+      expiresIn: '1h',
+    },
+    (error, token) => {
+      if (error) throw error;
+      return res.status(200).json({
+        status: 'success',
+        data: { token, user: payload },
+      });
+    }
+  );
 }
 
 async function signup(req, res) {
