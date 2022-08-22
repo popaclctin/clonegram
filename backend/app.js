@@ -2,6 +2,7 @@ const config = require('./config');
 const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
+const rootRouter = require('./routes/rootRouter');
 
 //parse requests of type application/json
 app.use(express.json());
@@ -12,6 +13,8 @@ app.use(
     extended: true,
   })
 );
+
+app.use('/', rootRouter);
 
 mongoose
   .connect(config.dbHost)

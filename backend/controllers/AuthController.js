@@ -19,11 +19,11 @@ async function login(req, res) {
   const { email, password } = req.body;
 
   //find the account
-  const user = await User.findOne({ email, username }, 'password');
+  const user = await User.findOne({ email }, 'email password');
 
   const checkPassword = user && (await user.comparePassword(password));
 
-  if (!user || !checkPassword) {
+  if (!checkPassword) {
     return res.status(400).send('Invalid email or password');
   }
 
@@ -37,13 +37,14 @@ async function login(req, res) {
     payload,
     jwtSecret,
     {
-      expiresIn: '1h',
+      expiresIn: '1d',
     },
     (error, token) => {
       if (error) throw error;
       return res.status(200).json({
         status: 'success',
         data: { token, user: payload },
+        message: 'Login successfull',
       });
     }
   );
@@ -69,11 +70,11 @@ async function signup(req, res) {
   await User.create({
     email,
     username,
-    hashedPassword,
+    password: hashedPassword,
   });
 
   return res.status(201).json({
     status: 'success',
-    data: 'Account created successfully. Please log in',
+    message: 'Account created',
   });
 }
