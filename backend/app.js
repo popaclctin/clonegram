@@ -2,6 +2,7 @@ const config = require('./config');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const errorHandlerMiddleware = require('./middlewares/errorHandler');
+const validationErrorHandlerMiddleware = require('./middlewares/validationErrorHandler');
 
 const rootRouter = require('./routes/root.routes');
 const express = require('express');
@@ -30,6 +31,7 @@ app.use(
 
 app.use('/', rootRouter);
 
+app.use(validationErrorHandlerMiddleware);
 app.use(errorHandlerMiddleware);
 
 app.listen(config.port, () => {

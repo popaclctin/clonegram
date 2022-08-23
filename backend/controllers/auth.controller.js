@@ -14,7 +14,7 @@ async function login(req, res, next) {
   //check for validation errors
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    const httpError = createHttpError(400, errors);
+    const httpError = createHttpError(400, { errors: errors.array() });
     return next(httpError);
   }
 

@@ -6,11 +6,7 @@ const authController = require('../controllers/auth.controller');
 
 router.post(
   '/login',
-  body('email')
-    .notEmpty()
-    .isEmail()
-    .normalizeEmail()
-    .withMessage('Email is invalid'),
+  body('email').isEmail().normalizeEmail().withMessage('Email is invalid'),
   body('password')
     .notEmpty()
     .isLength({ min: 6 })
