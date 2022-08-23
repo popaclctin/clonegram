@@ -1,9 +1,20 @@
 const config = require('./config');
+const morgan = require('morgan');
 const mongoose = require('mongoose');
+const errorHandlerMiddleware = require('./middlewares/errorHandler');
+
+const rootRouter = require('./routes/root.routes');
 const express = require('express');
 const app = express();
-const rootRouter = require('./routes/root.routes');
-const morgan = require('morgan');
+
+mongoose
+  .connect(config.dbHost)
+  .then(() => {
+    console.log('DB connected');
+  })
+  .catch((err) => {
+    console.log(err, 'Failed to connect to DB');
+  });
 
 app.use(morgan('dev'));
 
@@ -19,14 +30,7 @@ app.use(
 
 app.use('/', rootRouter);
 
-mongoose
-  .connect(config.dbHost)
-  .then(() => {
-    console.log('DB connected');
-  })
-  .catch((err) => {
-    console.log(err, 'Failed to connect to DB');
-  });
+app.use(errorHandlerMiddleware);
 
 app.listen(config.port, () => {
   console.log('Server is live on port ' + config.port);
