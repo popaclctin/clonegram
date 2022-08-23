@@ -25,7 +25,7 @@ app.use(express.json());
 //parse requests of type application/x-www-form-urlencoded
 app.use(
   express.urlencoded({
-    extended: true,
+    extended: false,
   })
 );
 

@@ -25,8 +25,7 @@ async function login(req, res, next) {
     const user = await User.findOne({ email });
     const validPassword = user && (await user.comparePassword(password));
     if (!validPassword) {
-      const httpError = createHttpError(400, 'Invalid email or password');
-      return next(httpError);
+      return next(createHttpError(400, 'Invalid email or password'));
     }
 
     const payload = {
@@ -45,8 +44,7 @@ async function login(req, res, next) {
       username: user.username,
     });
   } catch (error) {
-    const httpError = createHttpError(400, error);
-    return next(httpError);
+    return next(createHttpError(400, error));
   }
 }
 
@@ -54,31 +52,35 @@ async function signup(req, res) {
   //check for validation errors
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
+    const httpError = createHttpError(400, { errors: errors.array() });
+    return next(httpError);
   }
 
   const { email, username, password, firstName, lastName } = req.body;
 
-  //check if the email already exists
-  const existingUser = await User.findOne({ email });
-  if (existingUser) {
-    return res.status(400).send('Email already taken');
+  try {
+    //check if the email already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return next(createHttpError(400, 'Email already taken'));
+    }
+
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+    await User.create({
+      email,
+      username,
+      password: hashedPassword,
+      name: {
+        first: firstName,
+        last: lastName,
+      },
+    });
+
+    return res.status(201).json({
+      message: 'Account created',
+    });
+  } catch (err) {
+    return next(createHttpError(400, err));
   }
-
-  const hashedPassword = await bcrypt.hash(password, saltRounds);
-
-  await User.create({
-    email,
-    username,
-    password: hashedPassword,
-    name: {
-      first: firstName,
-      last: lastName,
-    },
-  });
-
-  return res.status(201).json({
-    status: 'success',
-    message: 'Account created',
-  });
 }

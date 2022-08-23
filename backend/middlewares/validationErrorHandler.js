@@ -1,4 +1,4 @@
-const { getHttpStatusCode } = require('../utils/errorMiddleware');
+const { getHttpStatusCode } = require('../utils/middleware');
 
 function errorHandler(error, req, res, next) {
   if (!error.hasOwnProperty('errors')) {

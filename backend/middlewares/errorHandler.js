@@ -3,7 +3,7 @@ const {
   getErrorMessage,
   getHttpStatusCode,
   logErrorMessage,
-} = require('../utils/errorMiddleware');
+} = require('../utils/middleware');
 
 function errorHandler(error, req, res, next) {
   const errorMessage = getErrorMessage(error);
