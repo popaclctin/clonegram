@@ -57,7 +57,7 @@ async function signup(req, res) {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const { email, username, password } = req.body;
+  const { email, username, password, firstName, lastName } = req.body;
 
   //check if the email already exists
   const existingUser = await User.findOne({ email });
@@ -71,6 +71,10 @@ async function signup(req, res) {
     email,
     username,
     password: hashedPassword,
+    name: {
+      first: firstName,
+      last: lastName,
+    },
   });
 
   return res.status(201).json({

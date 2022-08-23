@@ -6,8 +6,15 @@ const authController = require('../controllers/authController');
 
 router.post(
   '/login',
-  body('email').notEmpty().isEmail().normalizeEmail(),
-  body('password').notEmpty().isLength({ min: 6 }),
+  body('email')
+    .notEmpty()
+    .isEmail()
+    .normalizeEmail()
+    .withMessage('Email is invalid'),
+  body('password')
+    .notEmpty()
+    .isLength({ min: 6 })
+    .withMessage('Password must be at least 6 characters long'),
   authController.login
 );
 
@@ -17,11 +24,14 @@ router.post(
     .notEmpty()
     .isEmail()
     .normalizeEmail()
-    .withMessage('Email is invalid')
-    .trim()
-    .escape(),
-  body('password').notEmpty().isLength({ min: 6 }),
-  body('username').notEmpty(),
+    .withMessage('Email is invalid'),
+  body('password')
+    .notEmpty()
+    .isLength({ min: 6 })
+    .withMessage('Password must be at least 6 characters long'),
+  body('username').notEmpty().trim(),
+  body('firstName').notEmpty().trim(),
+  body('lastName').notEmpty().trim(),
   authController.signup
 );
 

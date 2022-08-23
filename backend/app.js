@@ -5,7 +5,7 @@ const app = express();
 const rootRouter = require('./routes/rootRouter');
 const morgan = require('morgan');
 
-app.use(morgan('combined'));
+app.use(morgan('dev'));
 
 //parse requests of type application/json
 app.use(express.json());
