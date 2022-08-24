@@ -14,7 +14,7 @@ async function login(req, res, next) {
   //check for validation errors
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    const httpError = createHttpError(400, { errors: errors.array() });
+    const httpError = createHttpError(400, { invalidParams: errors.array() });
     return next(httpError);
   }
 
@@ -52,7 +52,7 @@ async function signup(req, res) {
   //check for validation errors
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    const httpError = createHttpError(400, { errors: errors.array() });
+    const httpError = createHttpError(400, { invalidParams: errors.array() });
     return next(httpError);
   }
 

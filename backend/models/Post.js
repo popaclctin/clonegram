@@ -11,9 +11,8 @@ const postSchema = new Schema(
       type: String,
       trim: true,
     },
-    image: {
-      data: Buffer,
-      contentType: String,
+    image_path: {
+      type: String,
     },
     likes: [
       {

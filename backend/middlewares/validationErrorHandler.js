@@ -1,13 +1,13 @@
 const { getHttpStatusCode } = require('../utils/middleware');
 
 function errorHandler(error, req, res, next) {
-  if (!error.hasOwnProperty('errors')) {
+  if (!error.hasOwnProperty('invalidParams')) {
     return next(error);
   }
 
   res.status(getHttpStatusCode({ error, res }));
 
-  res.json({ errors: error.errors, message: 'VALIDATION_ERROR' });
+  res.json({ invalidParams: error.invalidParams, message: 'VALIDATION_ERROR' });
 
   //ensure any remaining middleware are run
   next();
