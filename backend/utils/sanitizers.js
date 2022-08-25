@@ -1,5 +1,7 @@
+const ObjectId = require('mongoose').Types.ObjectId;
+
 function sanitizeId(value) {
-  return ObjectId(value);
+  return new ObjectId(value);
 }
 
 module.exports.sanitizeId = sanitizeId;
