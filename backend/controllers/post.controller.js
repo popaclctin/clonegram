@@ -10,6 +10,12 @@ module.exports.updatePost = updatePost;
 module.exports.deletePost = deletePost;
 
 async function getPosts(req, res, next) {
+  //check for validation errors
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const httpError = createHttpError(400, { invalidParams: errors.array() });
+    return next(httpError);
+  }
   const { userId, page = 1, limit = 10 } = req.query;
   try {
     const posts = await Post.find({ user: userId })
@@ -52,6 +58,12 @@ async function createPost(req, res, next) {
 }
 
 async function getPostById(req, res, next) {
+  //check for validation errors
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const httpError = createHttpError(400, { invalidParams: errors.array() });
+    return next(httpError);
+  }
   const { postId } = req.params;
 
   try {
@@ -69,6 +81,12 @@ async function getPostById(req, res, next) {
 }
 
 async function updatePost(req, res, next) {
+  //check for validation errors
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const httpError = createHttpError(400, { invalidParams: errors.array() });
+    return next(httpError);
+  }
   const { postId } = req.params;
   const { caption } = req.body;
 
@@ -85,6 +103,12 @@ async function updatePost(req, res, next) {
 }
 
 async function deletePost(req, res, next) {
+  //check for validation errors
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const httpError = createHttpError(400, { invalidParams: errors.array() });
+    return next(httpError);
+  }
   const { postId } = req.params;
 
   try {
