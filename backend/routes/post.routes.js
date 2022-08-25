@@ -20,6 +20,8 @@ const postController = require('../controllers/post.controller');
 //   postController.getPostById
 // );
 
+router.get('/', postController.getPosts);
+
 router.post(
   '/',
   body('userId').notEmpty().customSanitizer(sanitizeId),

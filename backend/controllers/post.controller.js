@@ -10,10 +10,19 @@ module.exports.createPost = createPost;
 // module.exports.deletePost = deletePost;
 
 async function getPosts(req, res, next) {
-  const userId = req.params.userId;
+  const { userId, page = 1, limit = 10 } = req.query;
   try {
-    const posts = await Post.find({ _id: userId }).sort({ createdAt: -1 });
-    res.json(posts);
+    const posts = await Post.find({ user: userId })
+      .limit(limit)
+      .skip((page - 1) * limit);
+
+    const count = await Post.find({ user: userId }).countDocuments();
+
+    res.json({
+      posts,
+      totalPages: Math.ceil(count / limit),
+      currentPage: page,
+    });
   } catch (err) {
     return next(createHttpError(500, err));
   }
