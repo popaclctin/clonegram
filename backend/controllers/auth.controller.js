@@ -48,7 +48,7 @@ async function login(req, res, next) {
   }
 }
 
-async function signup(req, res) {
+async function signup(req, res, next) {
   //check for validation errors
   const errors = validationResult(req);
   if (!errors.isEmpty()) {

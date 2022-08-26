@@ -33,6 +33,7 @@ router.post(
     if (value !== req.body.password) {
       throw new Error('Password confirmation does not match password');
     }
+    return true;
   }),
   body('username').notEmpty().trim(),
   body('firstName').notEmpty().trim(),

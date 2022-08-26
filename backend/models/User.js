@@ -7,9 +7,9 @@ const userSchema = new Schema(
   {
     email: {
       type: String,
-      lowercase: true,
-      trim: true,
-      required: [true, 'Email is required'],
+    },
+    username: {
+      type: String,
     },
     name: {
       first: String,
@@ -17,7 +17,6 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
-      required: [true, 'Password is required'],
     },
     followers: [
       {
@@ -43,6 +42,9 @@ const userSchema = new Schema(
     timestamps: true,
   }
 );
+
+//Adds virtuals to the JSON object of a User document
+userSchema.set('toJSON', { virtuals: true });
 
 // Compare the password
 userSchema.methods.comparePassword = async function (userPassword) {
