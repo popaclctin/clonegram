@@ -5,7 +5,7 @@ const post = require('./post.routes');
 const like = require('./like.routes');
 
 rootRouter.use('/auth', auth);
-rootRouter.use('/posts', post);
-rootRouter.use('/likes', like);
+rootRouter.use('/post', post);
+rootRouter.use('/like', like);
 
 module.exports = rootRouter;
