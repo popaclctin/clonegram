@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { jwtSecret } = require('../config');
+const { jwtSecret } = require('../configuration/config');
 const { validationResult } = require('express-validator');
 const createHttpError = require('http-errors');
 const bcrypt = require('bcrypt');

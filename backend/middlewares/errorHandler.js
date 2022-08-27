@@ -1,4 +1,4 @@
-const { env } = require('../config');
+const { env } = require('../configuration/config');
 const {
   getErrorMessage,
   getHttpStatusCode,
