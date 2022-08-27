@@ -21,7 +21,7 @@ async function createComment(req, res, next) {
       user: userId,
       post: postId,
       content,
-    }).exec();
+    });
     return res.status(201).json({
       message: 'Comment created',
     });

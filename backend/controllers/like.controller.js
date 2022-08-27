@@ -19,7 +19,7 @@ async function createLike(req, res, next) {
     await Like.create({
       user: userId,
       post: postId,
-    }).exec();
+    });
     return res.status(201).json({
       message: 'Like created',
     });

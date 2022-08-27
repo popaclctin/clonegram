@@ -2,6 +2,7 @@ const { validationResult } = require('express-validator');
 const createHttpError = require('http-errors');
 
 const User = require('../models/User');
+const Post = require('../models/Post');
 
 module.exports.getFeed = getFeed;
 
@@ -17,14 +18,16 @@ async function getFeed(req, res, next) {
   const { page = 1, limit = 10 } = req.query;
 
   try {
-    const user = await User.findById(userId).exec();
+    const user = await User.findById(userId, 'following').exec();
+
+    const feedPosts = await Post.find({ user: { $in: user.following } }).exec();
 
     //TODO: get the posts of each follow
 
-    const count = posts.length;
+    const count = 0;
 
     res.status(200).json({
-      users,
+      posts: feedPosts,
       totalPages: Math.ceil(count / limit),
       currentPage: page,
     });

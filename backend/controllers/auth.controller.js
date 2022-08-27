@@ -75,7 +75,7 @@ async function signup(req, res, next) {
         first: firstName,
         last: lastName,
       },
-    }).exec();
+    });
 
     return res.status(201).json({
       message: 'Account created',

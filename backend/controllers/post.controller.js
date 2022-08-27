@@ -49,7 +49,7 @@ async function createPost(req, res, next) {
       user: userId,
       caption,
       image_path: req.file.path,
-    }).exec();
+    });
     return res.status(201).json({
       message: 'Post created',
     });
