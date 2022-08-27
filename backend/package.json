@@ -2,9 +2,9 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "Node.js RESTful CRUD API with Express and MongoDB",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
-    "dev": "nodemon ./app.js",
+    "dev": "nodemon ./server.js",
     "test": "jest"
   },
   "author": "Claudiu Popa",

@@ -39,6 +39,4 @@ mongoose
     process.exit();
   });
 
-app.listen(config.port, () => {
-  console.log('Server is live on port ' + config.port);
-});
+module.exports = app;
