@@ -14,17 +14,23 @@ async function getFeed(req, res, next) {
     return next(httpError);
   }
 
-  const { userId } = req.param;
+  const { userId } = req.params;
   const { page = 1, limit = 10 } = req.query;
 
   try {
-    const user = await User.findById(userId, 'following').exec();
+    const user = await User.findById(userId).exec();
 
-    const feedPosts = await Post.find({ user: { $in: user.following } }).exec();
+    const feedPosts = await Post.find({
+      user: { $in: user.following },
+    })
+      .sort({ createdAt: -1 })
+      .limit(limit)
+      .skip((page - 1) * limit)
+      .exec();
 
-    //TODO: get the posts of each follow
-
-    const count = 0;
+    const count = await Post.find({
+      user: { $in: user.following },
+    }).countDocuments();
 
     res.status(200).json({
       posts: feedPosts,
