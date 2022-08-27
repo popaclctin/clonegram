@@ -20,9 +20,10 @@ async function getPosts(req, res, next) {
   try {
     const posts = await Post.find({ user: userId })
       .limit(limit)
-      .skip((page - 1) * limit);
+      .skip((page - 1) * limit)
+      .exec();
 
-    const count = await Post.find({ user: userId }).countDocuments();
+    const count = await Post.find({ user: userId }).countDocuments().exec();
 
     res.status(200).json({
       posts,
@@ -48,7 +49,7 @@ async function createPost(req, res, next) {
       user: userId,
       caption,
       image_path: req.file.path,
-    });
+    }).exec();
     return res.status(201).json({
       message: 'Post created',
     });
@@ -68,7 +69,7 @@ async function getPostById(req, res, next) {
 
   try {
     // const post = await Post.findById(postId).populate('likes', 'comments');
-    const post = await Post.findById(postId);
+    const post = await Post.findById(postId).exec();
 
     if (!post) {
       return next(createHttpError(404, 'Post does not exist'));
@@ -95,7 +96,7 @@ async function updatePost(req, res, next) {
       postId,
       { caption },
       { new: true }
-    );
+    ).exec();
     res.status(200).json(updatedPost);
   } catch (err) {
     return next(createHttpError(500, err));
@@ -112,7 +113,7 @@ async function deletePost(req, res, next) {
   const { postId } = req.params;
 
   try {
-    await Post.deleteOne({ _id: postId });
+    await Post.deleteOne({ _id: postId }).exec();
     res.status(200).json({ message: 'Post deleted' });
   } catch (err) {
     return next(createHttpError(500, err));

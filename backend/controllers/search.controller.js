@@ -24,9 +24,18 @@ async function searchUser(req, res, next) {
       ],
     })
       .limit(limit)
-      .skip((page - 1) * limit);
+      .skip((page - 1) * limit)
+      .exec();
 
-    const count = users.length;
+    const count = await User.find({
+      $or: [
+        { username: { $regex: query, $options: 'i' } },
+        { 'name.first': { $regex: query, $options: 'i' } },
+        { 'name.last': { $regex: query, $options: 'i' } },
+      ],
+    })
+      .countDocuments()
+      .exec();
 
     res.status(200).json({
       users,

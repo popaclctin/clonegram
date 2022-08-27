@@ -19,7 +19,7 @@ async function createLike(req, res, next) {
     await Like.create({
       user: userId,
       post: postId,
-    });
+    }).exec();
     return res.status(201).json({
       message: 'Like created',
     });
@@ -38,7 +38,7 @@ async function deleteLike(req, res, next) {
   const { likeId } = req.params;
 
   try {
-    await Like.deleteOne({ _id: likeId });
+    await Like.deleteOne({ _id: likeId }).exec();
     res.status(200).json({ message: 'Like deleted' });
   } catch (err) {
     return next(createHttpError(500, err));

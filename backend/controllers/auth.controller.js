@@ -22,7 +22,7 @@ async function login(req, res, next) {
 
   try {
     //find the account
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).exec();
     const validPassword = user && (await user.comparePassword(password));
     if (!validPassword) {
       return next(createHttpError(400, 'Invalid email or password'));
@@ -60,7 +60,7 @@ async function signup(req, res, next) {
 
   try {
     //check if the email already exists
-    const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({ email }).exec();
     if (existingUser) {
       return next(createHttpError(400, 'Email already taken'));
     }
@@ -75,7 +75,7 @@ async function signup(req, res, next) {
         first: firstName,
         last: lastName,
       },
-    });
+    }).exec();
 
     return res.status(201).json({
       message: 'Account created',

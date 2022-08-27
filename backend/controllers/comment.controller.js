@@ -21,7 +21,7 @@ async function createComment(req, res, next) {
       user: userId,
       post: postId,
       content,
-    });
+    }).exec();
     return res.status(201).json({
       message: 'Comment created',
     });
@@ -45,7 +45,7 @@ async function updateComment(req, res, next) {
       commentId,
       { content },
       { new: true }
-    );
+    ).exec();
     res.status(200).json(updatedComment);
   } catch (err) {
     return next(createHttpError(500, err));
@@ -62,7 +62,7 @@ async function deleteComment(req, res, next) {
   const { commentId } = req.params;
 
   try {
-    await Comment.deleteOne({ _id: commentId });
+    await Comment.deleteOne({ _id: commentId }).exec();
     res.status(200).json({ message: 'Comment deleted' });
   } catch (err) {
     return next(createHttpError(500, err));
