@@ -18,6 +18,11 @@ async function followUser(req, res, next) {
     const user = await User.findById(userId).exec();
     user.following.push(followeeId);
     await user.save();
+
+    const followee = await User.findById(followeeId).exec();
+    followee.followers.push(userId);
+    await followee.save();
+
     return res.status(200).json({
       message: 'User followed',
     });
