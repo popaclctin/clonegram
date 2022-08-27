@@ -1,7 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
-const mongoose = require('mongoose');
 const config = require('./config');
 const path = require('path');
 const rootRouter = require('./routes/root.routes');
@@ -28,15 +27,5 @@ app.use(express.static(path.resolve(__dirname, './public')));
 app.use('/', rootRouter);
 app.use(validationErrorHandlerMiddleware);
 app.use(errorHandlerMiddleware);
-
-mongoose
-  .connect(config.dbHost)
-  .then(() => {
-    console.log('Connected to the database!');
-  })
-  .catch((err) => {
-    console.log('Cannot connect to the database!', err);
-    process.exit();
-  });
 
 module.exports = app;
