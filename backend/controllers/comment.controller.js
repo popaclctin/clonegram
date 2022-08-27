@@ -68,5 +68,3 @@ async function deleteComment(req, res, next) {
     return next(createHttpError(500, err));
   }
 }
-
-//TODO: de continuat

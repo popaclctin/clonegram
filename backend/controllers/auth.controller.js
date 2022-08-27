@@ -44,7 +44,7 @@ async function login(req, res, next) {
       username: user.username,
     });
   } catch (error) {
-    return next(createHttpError(400, error));
+    return next(createHttpError(500, error));
   }
 }
 
@@ -81,6 +81,6 @@ async function signup(req, res, next) {
       message: 'Account created',
     });
   } catch (err) {
-    return next(createHttpError(400, err));
+    return next(createHttpError(500, err));
   }
 }

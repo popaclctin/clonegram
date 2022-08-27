@@ -11,6 +11,7 @@ const validationErrorHandlerMiddleware = require('./middlewares/validationErrorH
 const app = express();
 
 app.use(morgan('dev'));
+
 const corsOptions = {
   origin: `http://localhost:${config.port}`,
 };

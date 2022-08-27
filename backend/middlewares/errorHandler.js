@@ -10,7 +10,7 @@ function errorHandler(error, req, res, next) {
 
   logErrorMessage(errorMessage);
 
-  //If response headers have already been sent, delegate to the default Express error handler
+  //If response headers have already been sent, delegate to the next error handler
   if (res.headersSent) {
     return next(error);
   }
