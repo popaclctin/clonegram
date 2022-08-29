@@ -55,12 +55,6 @@ async function signup(req, res, next) {
   const { email, username, password, firstName, lastName } = req.body;
 
   try {
-    //check if the email already exists
-    const existingUser = await User.findOne({ email }).exec();
-    if (existingUser) {
-      return next(createHttpError(400, 'Email already taken'));
-    }
-
     await User.create({
       email,
       username,

@@ -3,6 +3,7 @@ const router = express.Router();
 const { body } = require('express-validator');
 
 const authController = require('../controllers/auth.controller');
+const User = require('../models/User');
 
 router.post(
   '/login',
@@ -24,7 +25,14 @@ router.post(
     .notEmpty()
     .isEmail()
     .normalizeEmail()
-    .withMessage('Email is invalid'),
+    .withMessage('Email is invalid')
+    .custom(async (value) => {
+      let existingUser = await User.findOne({ email: value }).exec();
+      if (existingUser) {
+        throw new Error('Email already taken');
+      }
+      return true;
+    }),
   body('password')
     .notEmpty()
     .isLength({ min: 6 })
@@ -35,7 +43,16 @@ router.post(
     }
     return true;
   }),
-  body('username').notEmpty().trim(),
+  body('username')
+    .notEmpty()
+    .trim()
+    .custom(async (value) => {
+      let existingUser = await User.findOne({ username: value }).exec();
+      if (existingUser) {
+        throw new Error('Username already taken');
+      }
+      return true;
+    }),
   body('firstName').notEmpty().trim(),
   body('lastName').notEmpty().trim(),
   authController.signup
