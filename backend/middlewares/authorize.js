@@ -1,6 +1,5 @@
-const jwt = require('jsonwebtoken');
-const { jwtSecret } = require('../config');
 const createHttpError = require('http-errors');
+const jwt = require('../utils/jwt');
 const User = require('../models/User');
 
 function authorize(req, res, next) {
@@ -18,10 +17,9 @@ function authorize(req, res, next) {
   }
 
   const token = authHeaderParts[1];
-  jwt.verify(token, jwtSecret, function (err, decoded) {
-    if (err) {
-      return next(createHttpError(401, 'Invalid token'));
-    }
+
+  try {
+    const decoded = jwt.verifyJwt(token);
 
     User.findById(decoded.id, function (err, user) {
       if (err) {
@@ -36,7 +34,17 @@ function authorize(req, res, next) {
 
       next();
     });
-  });
+  } catch (err) {
+    switch (err.name) {
+      case 'TokenExpiredError': {
+        return next(createHttpError(401, 'Token expired'));
+      }
+      case 'JsonWebTokenError': {
+        return next(createHttpError(401, 'Invalid token'));
+      }
+    }
+    return next(createHttpError(500, err));
+  }
 }
 
 module.exports = authorize;

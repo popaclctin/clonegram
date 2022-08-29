@@ -1,15 +1,19 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const bcrypt = require('bcrypt');
-const saltRounds = 10;
+const { saltRounds } = require('../configuration/config');
 
 const userSchema = new Schema(
   {
     email: {
       type: String,
+      required: true,
+      unique: true,
     },
     username: {
       type: String,
+      required: true,
+      unique: true,
     },
     name: {
       first: String,
@@ -17,6 +21,7 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
+      required: true,
     },
     followers: [
       {
@@ -50,6 +55,19 @@ userSchema.set('toJSON', { virtuals: true });
 userSchema.methods.comparePassword = async function (userPassword) {
   return await bcrypt.compare(userPassword, this.password);
 };
+
+// Hash the password before saving the document
+userSchema.pre('save', async function (next) {
+  const user = this;
+  if (!user.isModified('password')) return next();
+  try {
+    const hash = await bcrypt.hash(password, saltRounds);
+    user.password = hash;
+    next();
+  } catch (err) {
+    next(err);
+  }
+});
 
 const User = mongoose.model('User', userSchema);
 

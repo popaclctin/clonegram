@@ -1,15 +1,12 @@
-const jwt = require('jsonwebtoken');
-const { jwtSecret } = require('../configuration/config');
+const jwt = require('../utils/jwt');
 const { validationResult } = require('express-validator');
 const createHttpError = require('http-errors');
-const bcrypt = require('bcrypt');
-const saltRounds = 10;
 
 const User = require('../models/User');
 
 module.exports.login = login;
 module.exports.signup = signup;
-
+//TODO: refactor authentication with new jwt module
 async function login(req, res, next) {
   //check for validation errors
   const errors = validationResult(req);
@@ -33,15 +30,14 @@ async function login(req, res, next) {
     };
 
     //generate an id Token
-    const token = jwt.sign(payload, jwtSecret, {
-      expiresIn: '1d',
-    });
+    const token = jwt.signJwt(payload);
 
     return res.status(200).json({
       token,
       id: user._id,
       email: user.email,
       username: user.username,
+      fullName: user.fullName,
     });
   } catch (error) {
     return next(createHttpError(500, error));
@@ -65,12 +61,10 @@ async function signup(req, res, next) {
       return next(createHttpError(400, 'Email already taken'));
     }
 
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
-
     await User.create({
       email,
       username,
-      password: hashedPassword,
+      password,
       name: {
         first: firstName,
         last: lastName,
