@@ -67,7 +67,7 @@ describe('authentication', () => {
     });
   });
 
-  // /auth/login
+  // /auth/signup
   describe('POST auth/signup route', () => {
     describe('given the email already exists', () => {
       it('should return a 400 status', async () => {
