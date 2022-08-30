@@ -1,9 +1,11 @@
-const { getHttpStatusCode } = require('../utils/middleware');
+const { getHttpStatusCode, logErrorMessage } = require('../utils/middleware');
 
 function errorHandler(error, req, res, next) {
   if (!error.hasOwnProperty('invalidParams')) {
     return next(error);
   }
+
+  // logErrorMessage(error.invalidParams);
 
   res.status(getHttpStatusCode({ error, res }));
 

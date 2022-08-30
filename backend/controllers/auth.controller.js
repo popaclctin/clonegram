@@ -22,7 +22,7 @@ async function login(req, res, next) {
     const user = await User.findOne({ email }).exec();
     const validPassword = user && (await user.comparePassword(password));
     if (!validPassword) {
-      return next(createHttpError(400, 'Invalid email or password'));
+      return next(createHttpError(400, 'Email or password is incorrect'));
     }
 
     const payload = {

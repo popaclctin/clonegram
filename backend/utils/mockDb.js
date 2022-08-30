@@ -46,7 +46,7 @@ async function dropCollections() {
   }
 }
 
-//DATA
+//DUMMY DATA
 
 const users = [
   {
