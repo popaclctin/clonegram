@@ -1,5 +1,6 @@
 backend/public/uploads
 build
+frontend/design
 
 # Logs
 logs
