@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import Navbar from './Navbar';
 
 function Header() {
   return (
@@ -8,14 +9,7 @@ function Header() {
       <div className='search'>
         <input type='text' placeholder='Search' />
       </div>
-      <nav className='nav'>
-        <ul>
-          <li>
-            <NavLink to='/'>Home</NavLink>
-            <NavLink to='/test'>Test</NavLink>
-          </li>
-        </ul>
-      </nav>
+      <Navbar />
     </header>
   );
 }
