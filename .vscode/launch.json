@@ -5,11 +5,14 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Docker: Attach to Node",
       "type": "node",
-      "request": "launch",
-      "name": "Launch Program",
-      "skipFiles": ["<node_internals>/**"],
-      "program": "${workspaceFolder}\\backend\\server.js"
+      "request": "attach",
+      "port": 6868,
+      "address": "localhost",
+      "localRoot": "${workspaceFolder}",
+      "remoteRoot": "/backend",
+      "skipFiles": ["node_modules/**/*.js", "<node_internals>/**/*.js"]
     }
   ]
 }

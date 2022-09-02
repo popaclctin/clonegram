@@ -27,5 +27,17 @@ services:
       - NODE_DOCKER_PORT=$NODE_DOCKER_PORT
     volumes:
       - ./backend:/backend
+  frontend:
+    depends_on:
+      - backend
+    restart: unless-stopped
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    env_file: .env
+    ports:
+      - $REACT_LOCAL_PORT:$REACT_DOCKER_PORT
+    volumes:
+      - ./frontend:/frontend
 volumes:
   my_data:
