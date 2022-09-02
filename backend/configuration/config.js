@@ -2,7 +2,7 @@ const path = require('path');
 //resolve path for debugging
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
-const { DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME } = process.env;
+const { DB_HOST, DB_PORT, DB_NAME } = process.env;
 
 const config = {
   env: process.env.NODE_ENV || 'development',

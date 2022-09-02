@@ -12,7 +12,7 @@ const app = express();
 app.use(morgan('dev'));
 
 const corsOptions = {
-  origin: `http://localhost:${config.port}`,
+  origin: ['http://localhost:3000', `http://localhost:${config.port}`],
 };
 app.use(cors(corsOptions));
 //parse requests of type application/json

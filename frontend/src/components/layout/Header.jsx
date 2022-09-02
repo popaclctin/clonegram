@@ -1,8 +1,17 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 import Navbar from './Navbar';
+import { useDispatch } from 'react-redux';
+import { resetCredentials } from '../../store/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 function Header() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const logoutHandler = () => {
+    dispatch(resetCredentials());
+    navigate('/login', { replace: true });
+  };
+
   return (
     <header className='header'>
       <div className='logo'>Logo</div>
@@ -10,6 +19,7 @@ function Header() {
         <input type='text' placeholder='Search' />
       </div>
       <Navbar />
+      <button onClick={logoutHandler}>Logout</button>
     </header>
   );
 }
