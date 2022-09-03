@@ -8,6 +8,7 @@ import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import HomePage from './pages/HomePage';
 import CreatePostForm from './components/post/CreatePostForm';
+import Post from './components/post/Post';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -17,6 +18,7 @@ root.render(
         <Route path='/' element={<App />}>
           <Route index element={<HomePage />} />
           <Route path='post/create' element={<CreatePostForm />} />
+          <Route path='post/:postId' element={<Post />} />
         </Route>
         <Route path='/login' element={<LoginPage />} />
         <Route path='/signup' element={<SignupPage />} />
