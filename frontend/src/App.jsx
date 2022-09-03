@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Outlet, Link } from 'react-router-dom';
+import PrivateOutlet from './components/utils/PrivateOutlet';
 import Header from './components/layout/Header';
 
 function App() {
@@ -7,7 +7,7 @@ function App() {
     <Fragment>
       <Header />
       <main>
-        <Outlet />
+        <PrivateOutlet />
       </main>
       <footer>This is a footer</footer>
     </Fragment>
