@@ -48,7 +48,7 @@ function LoginForm() {
   };
 
   const formik = useFormik({
-    initialValues: { email: '', password: '' },
+    initialValues: { email: 'bula@gmail.com', password: 'parola' },
     validate,
     onSubmit: (values, { setSubmitting }) => {
       loginUser({ email: values.email, password: values.password });

@@ -12,8 +12,9 @@ const postSchema = new Schema(
       type: String,
       trim: true,
     },
-    image_path: {
-      type: String,
+    image: {
+      name: String,
+      path: String,
     },
     likes: [
       {
@@ -36,7 +37,7 @@ const postSchema = new Schema(
 // delete the image from storage
 postSchema.pre('deleteOne', async function (next) {
   const docToDelete = await this.model.findOne(this.getQuery());
-  fs.unlink(docToDelete.image_path, (err) => {
+  fs.unlink(docToDelete.image.path, (err) => {
     if (err) {
       next(err);
     }
