@@ -16,9 +16,9 @@ async function getPosts(req, res, next) {
     const httpError = createHttpError(400, { invalidParams: errors.array() });
     return next(httpError);
   }
-  const { userId, page = 1, limit = 10 } = req.query;
+  const { page = 1, limit = 10 } = req.query;
   try {
-    const posts = await Post.find({ user: userId })
+    const posts = await Post.find({ user: req.user._id })
       .limit(limit)
       .skip((page - 1) * limit)
       .exec();
@@ -43,10 +43,10 @@ async function createPost(req, res, next) {
     return next(httpError);
   }
 
-  const { userId, caption } = req.body;
+  const { caption } = req.body;
   try {
     await Post.create({
-      user: userId,
+      user: req.user._id,
       caption,
       image_path: req.file.path,
     });

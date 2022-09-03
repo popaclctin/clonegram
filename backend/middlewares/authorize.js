@@ -13,7 +13,7 @@ function authorize(req, res, next) {
     authHeaderParts.length !== 2 ||
     authHeaderParts[0].localeCompare('Bearer')
   ) {
-    return next(createHttpError(401, 'Malformed token'));
+    return next(createHttpError(401, 'Malformed authorization token'));
   }
 
   const token = authHeaderParts[1];
@@ -37,10 +37,10 @@ function authorize(req, res, next) {
   } catch (err) {
     switch (err.name) {
       case 'TokenExpiredError': {
-        return next(createHttpError(401, 'Token expired'));
+        return next(createHttpError(401, 'Authorization token is expired'));
       }
       case 'JsonWebTokenError': {
-        return next(createHttpError(401, 'Invalid token'));
+        return next(createHttpError(401, 'Invalid authorization token'));
       }
     }
     return next(createHttpError(500, err));
