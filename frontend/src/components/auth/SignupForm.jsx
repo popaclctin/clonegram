@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useSignupMutation } from '../../store/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
-import './SignupForm.style.scss';
+import './AuthForm.style.scss';
 
 function SignupForm() {
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ function SignupForm() {
   if (isError) {
     if (error.data.message === 'VALIDATION_ERROR') {
       errorMessage = error.data.invalidParams.map((param, index) => (
-        <p key={index}>{`${param.param}:${param.msg}`}</p>
+        <p key={index}>{param.msg}</p>
       ));
     } else {
       errorMessage = <p>{error.data.message}</p>;
@@ -30,7 +30,7 @@ function SignupForm() {
     const errors = {};
     //Validate email
     if (!values.email) {
-      errors.email = 'Required';
+      errors.email = 'Email is required';
     } else if (
       !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
     ) {
@@ -39,31 +39,31 @@ function SignupForm() {
 
     //Validate username
     if (!values.username) {
-      errors.username = 'Required';
+      errors.username = 'Username is required';
     }
 
     //Validate password
     if (!values.password) {
-      errors.password = 'Required';
+      errors.password = 'Password is required';
     } else if (values.password.length < 6) {
-      errors.password = 'Must be at least 6 characters';
+      errors.password = 'Password must be at least 6 characters long';
     }
 
     //Validate password confirmation
     if (!values.passwordConfirmation) {
-      errors.passwordConfirmation = 'Required';
+      errors.passwordConfirmation = 'Password confirmation is required';
     } else if (values.passwordConfirmation !== values.password) {
       errors.passwordConfirmation = 'Passwords are not the same';
     }
 
     //Validate first name
     if (!values.firstname) {
-      errors.firstname = 'Required';
+      errors.firstname = 'First name is required';
     }
 
     //Validate last name
     if (!values.lastname) {
-      errors.lastname = 'Required';
+      errors.lastname = 'Last name is required';
     }
 
     return errors;
@@ -93,9 +93,9 @@ function SignupForm() {
   });
 
   return (
-    <form onSubmit={formik.handleSubmit} className='signupForm'>
-      <div className='form-input'>
-        <label htmlFor='email'>Email</label>
+    <section className='authForm'>
+      <h1 className='authForm__title'>Clonegram</h1>
+      <form onSubmit={formik.handleSubmit}>
         <input
           type='email'
           id='email'
@@ -103,13 +103,10 @@ function SignupForm() {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.email}
+          placeholder='Email'
+          className='authForm__field'
         />
-        {formik.touched.email && formik.errors.email ? (
-          <div>{formik.errors.email}</div>
-        ) : null}
-      </div>
-      <div className='form-input'>
-        <label htmlFor='username'>Username</label>
+
         <input
           type='text'
           id='username'
@@ -117,13 +114,10 @@ function SignupForm() {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.username}
+          placeholder='Username'
+          className='authForm__field'
         />
-        {formik.touched.username && formik.errors.username ? (
-          <div>{formik.errors.username}</div>
-        ) : null}
-      </div>
-      <div className='form-input'>
-        <label htmlFor='password'>Password</label>
+
         <input
           type='password'
           id='password'
@@ -131,13 +125,10 @@ function SignupForm() {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.password}
+          placeholder='Password'
+          className='authForm__field'
         />
-        {formik.touched.password && formik.errors.password ? (
-          <div>{formik.errors.password}</div>
-        ) : null}
-      </div>
-      <div className='form-input'>
-        <label htmlFor='passwordConfirmation'>Confirm password</label>
+
         <input
           type='password'
           id='passwordConfirmation'
@@ -145,14 +136,10 @@ function SignupForm() {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.passwordConfirmation}
+          placeholder='Confirm password'
+          className='authForm__field'
         />
-        {formik.touched.passwordConfirmation &&
-        formik.errors.passwordConfirmation ? (
-          <div>{formik.errors.passwordConfirmation}</div>
-        ) : null}
-      </div>
-      <div className='form-input'>
-        <label htmlFor='firstname'>First name</label>
+
         <input
           type='text'
           id='firstname'
@@ -160,13 +147,10 @@ function SignupForm() {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.firstname}
+          placeholder='First name'
+          className='authForm__field'
         />
-        {formik.touched.firstname && formik.errors.firstname ? (
-          <div>{formik.errors.firstname}</div>
-        ) : null}
-      </div>
-      <div className='form-input'>
-        <label htmlFor='lastname'>Last name</label>
+
         <input
           type='text'
           id='lastname'
@@ -174,14 +158,41 @@ function SignupForm() {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.lastname}
+          placeholder='Last name'
+          className='authForm__field'
         />
-        {formik.touched.lastname && formik.errors.lastname ? (
-          <div>{formik.errors.lastname}</div>
+
+        <button
+          type='submit'
+          className='authForm__submitBtn'
+          disabled={!(formik.isValid && formik.dirty)}
+        >
+          Signup
+        </button>
+        {isError && <p className='authForm__error'>{errorMessage}</p>}
+        {formik.touched.email && formik.errors.email ? (
+          <p className='authForm__error'>{formik.errors.email}</p>
         ) : null}
-      </div>
-      <button type='submit'>Signup</button>
-      {isError && <div>{errorMessage}</div>}
-    </form>
+        {formik.touched.username && formik.errors.username ? (
+          <p className='authForm__error'>{formik.errors.username}</p>
+        ) : null}
+        {formik.touched.password && formik.errors.password ? (
+          <p className='authForm__error'>{formik.errors.password}</p>
+        ) : null}
+        {formik.touched.passwordConfirmation &&
+        formik.errors.passwordConfirmation ? (
+          <p className='authForm__error'>
+            {formik.errors.passwordConfirmation}
+          </p>
+        ) : null}
+        {formik.touched.firstname && formik.errors.firstname ? (
+          <p className='authForm__error'>{formik.errors.firstname}</p>
+        ) : null}
+        {formik.touched.lastname && formik.errors.lastname ? (
+          <p className='authForm__error'>{formik.errors.lastname}</p>
+        ) : null}
+      </form>
+    </section>
   );
 }
 

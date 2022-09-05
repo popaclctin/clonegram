@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useLoginMutation } from '../../store/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
-import './LoginForm.style.scss';
+import './AuthForm.style.scss';
 
 function LoginForm() {
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ function LoginForm() {
     const errors = {};
     //Validate email
     if (!values.email) {
-      errors.email = 'Required';
+      errors.email = 'Email is required';
     } else if (
       !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
     ) {
@@ -39,9 +39,9 @@ function LoginForm() {
 
     //Validate password
     if (!values.password) {
-      errors.password = 'Required';
+      errors.password = 'Password is required';
     } else if (values.password.length < 6) {
-      errors.password = 'Must be at least 6 characters';
+      errors.password = 'Password must be at least 6 characters long';
     }
 
     return errors;
@@ -57,9 +57,9 @@ function LoginForm() {
   });
 
   return (
-    <form onSubmit={formik.handleSubmit} className='loginForm'>
-      <div className='form-input'>
-        <label htmlFor='email'>Email</label>
+    <section className='authForm'>
+      <h1 className='authForm__title'>Clonegram</h1>
+      <form onSubmit={formik.handleSubmit}>
         <input
           type='email'
           id='email'
@@ -67,13 +67,9 @@ function LoginForm() {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.email}
+          placeholder='Email'
+          className='authForm__field'
         />
-        {formik.touched.email && formik.errors.email ? (
-          <div>{formik.errors.email}</div>
-        ) : null}
-      </div>
-      <div className='form-input'>
-        <label htmlFor='password'>Password</label>
         <input
           type='password'
           id='password'
@@ -81,14 +77,29 @@ function LoginForm() {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.password}
+          placeholder='Password'
+          className='authForm__field'
         />
-        {formik.touched.password && formik.errors.password ? (
-          <div>{formik.errors.password}</div>
+
+        <button
+          type='submit'
+          className='authForm__submitBtn'
+          disabled={!formik.isValid}
+        >
+          Log In
+        </button>
+        {isError && <p className='authForm__error'>{errorMessage}</p>}
+        {formik.touched.email && formik.errors.email ? (
+          <p className='authForm__error'>{formik.errors.email}</p>
         ) : null}
-      </div>
-      <button type='submit'>Login</button>
-      {isError && <div>{errorMessage}</div>}
-    </form>
+        {formik.touched.password && formik.errors.password ? (
+          <p className='authForm__error'>{formik.errors.password}</p>
+        ) : null}
+      </form>
+      <a href='#' className='authForm__forgotPass'>
+        Forgotten your password?
+      </a>
+    </section>
   );
 }
 

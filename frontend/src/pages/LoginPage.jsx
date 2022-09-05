@@ -1,12 +1,20 @@
 import React from 'react';
 import LoginForm from '../components/auth/LoginForm';
 import { Link } from 'react-router-dom';
+import './LoginPage.style.scss';
 
 function LoginPage() {
   return (
-    <section>
+    <section className='loginPage'>
       <LoginForm />
-      <Link to='/signup'>Sign Up</Link>
+      <div className='signUp'>
+        <p>
+          Don't have an account?
+          <Link to='/signup' className='signUp__link'>
+            Sign Up
+          </Link>
+        </p>
+      </div>
     </section>
   );
 }

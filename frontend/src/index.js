@@ -9,6 +9,7 @@ import SignupPage from './pages/SignupPage';
 import HomePage from './pages/HomePage';
 import CreatePostForm from './components/post/CreatePostForm';
 import Post from './components/post/Post';
+import './styles/style.scss';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

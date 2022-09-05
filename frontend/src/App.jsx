@@ -9,7 +9,6 @@ function App() {
       <main>
         <PrivateOutlet />
       </main>
-      <footer>This is a footer</footer>
     </Fragment>
   );
 }

@@ -1,0 +1,85 @@
+@use '../../styles/variables';
+@use '../../styles/mixins';
+
+.authForm {
+  $border-color: rgb(219, 219, 219);
+  $placeholder-color: rgb(142, 142, 142);
+
+  max-width: 22rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: 1rem;
+  margin: 0 auto;
+  padding: 1rem 0;
+  text-align: center;
+
+  &__title {
+    font-size: 2rem;
+    font-family: cursive;
+  }
+
+  &__field {
+    width: 100%;
+    padding: 0.25rem 0.5rem;
+    margin-bottom: 0.375rem;
+    border: 1px solid $border-color;
+    background-color: variables.$bgColor;
+    &::placeholder {
+      color: $placeholder-color;
+    }
+  }
+
+  &__submitBtn {
+    width: 100%;
+    padding: 0.25rem 0.5rem;
+    margin-bottom: 0.375rem;
+    background-color: variables.$blue;
+    color: #fff;
+    border: 0;
+    border-radius: 4px;
+
+    &:active {
+      background-color: rgba(variables.$blue, 0.7);
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:focus {
+      outline-width: 1rem;
+    }
+
+    &:disabled {
+      cursor: default;
+      background-color: rgba(variables.$blue, 0.3);
+    }
+  }
+
+  &__forgotPass {
+    text-decoration: none;
+    font-size: 0.75rem;
+    color: rgb(0, 55, 107);
+
+    &:active {
+      opacity: 0.5;
+    }
+  }
+
+  &__error {
+    padding: 0.25rem 0;
+    color: variables.$red;
+    text-align: center;
+    line-height: 1rem;
+  }
+}
+
+@include mixins.breakpoint-up(desktop) {
+  .authForm {
+    border: 1px solid variables.$lightGrey;
+    padding: 3rem 3rem 1rem;
+    background-color: #fff;
+  }
+}
