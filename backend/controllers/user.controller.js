@@ -49,13 +49,23 @@ async function followUser(req, res, next) {
     return next(httpError);
   }
 
-  const { userId, followeeId } = req.body;
+  const userId = req.user._id;
+  const { username } = req.body;
   try {
+    const followee = await User.findOne({ username }).exec();
+
+    if (!followee) {
+      const httpError = createHttpError(
+        400,
+        'The followed user does not exist'
+      );
+      return next(httpError);
+    }
+
     const user = await User.findById(userId).exec();
-    user.following.push(followeeId);
+    user.following.push(followee._id);
     await user.save();
 
-    const followee = await User.findById(followeeId).exec();
     followee.followers.push(userId);
     await followee.save();
 

@@ -62,6 +62,14 @@ export const apiSlice = createApi({
         ...result.posts.map(({ _id }) => ({ type: 'Post', id: _id })),
       ],
     }),
+    followUser: build.mutation({
+      query: (body) => ({
+        url: `user/follow`,
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: [{ type: 'Post', id: 'LIST' }],
+    }),
   }),
 });
 
@@ -72,4 +80,5 @@ export const {
   useEditPostMutation,
   useDeletePostMutation,
   useGetFeedQuery,
+  useFollowUserMutation,
 } = apiSlice;
