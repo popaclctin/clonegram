@@ -33,7 +33,7 @@ function Post() {
       </section>
     );
   } else if (isError) {
-    content = <div>{error.toString()}</div>;
+    content = <div>{JSON.stringify(error)}</div>;
   }
 
   return content;

@@ -27,6 +27,10 @@
       background-color: variables.$bgColor;
       padding: 0.25rem 1.5rem;
     }
+
+    &__results {
+      position: absolute;
+    }
   }
 
   &__nav {

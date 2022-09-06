@@ -70,6 +70,9 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: [{ type: 'Post', id: 'LIST' }],
     }),
+    searchUser: build.query({
+      query: (searchTerm) => ({ url: `search`, params: { query: searchTerm } }),
+    }),
   }),
 });
 
@@ -81,4 +84,5 @@ export const {
   useDeletePostMutation,
   useGetFeedQuery,
   useFollowUserMutation,
+  useSearchUserQuery,
 } = apiSlice;

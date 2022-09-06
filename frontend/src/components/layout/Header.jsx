@@ -3,9 +3,9 @@ import Navbar from './Navbar';
 import { useDispatch } from 'react-redux';
 import { resetCredentials } from '../../store/authSlice';
 import { useNavigate } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+
 import './Header.style.scss';
+import SearchInput from './SearchInput';
 
 function Header() {
   const dispatch = useDispatch();
@@ -20,17 +20,7 @@ function Header() {
       <div className='header__logo'>
         <p>Clonegram</p>
       </div>
-      <div className='header__search'>
-        <FontAwesomeIcon
-          icon={faMagnifyingGlass}
-          className='header__search__icon'
-        />
-        <input
-          type='text'
-          placeholder='Search'
-          className='header__search__input'
-        />
-      </div>
+      <SearchInput />
       <Navbar />
       <button onClick={logoutHandler}>Logout</button>
     </header>

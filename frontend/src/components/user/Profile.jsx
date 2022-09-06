@@ -40,7 +40,7 @@ function Profile() {
       <PostExcerpt key={post._id} post={post} />
     ));
   } else if (isError) {
-    content = <div>{error.toString()}</div>;
+    content = <div>{JSON.stringify(error)}</div>;
   }
 
   return (

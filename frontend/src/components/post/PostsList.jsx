@@ -1,6 +1,6 @@
 import React from 'react';
 
-function PostsList() {
+function PostsList(props) {
   return (
     <section>
       <h2>Posts List</h2>
