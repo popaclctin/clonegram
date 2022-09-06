@@ -9,6 +9,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         method: 'POST',
         body,
       }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Post', id: 'LIST' }],
     }),
     signup: build.mutation({
       query: (body) => ({ url: '/auth/signup', method: 'POST', body }),

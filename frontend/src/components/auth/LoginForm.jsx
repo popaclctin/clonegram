@@ -12,7 +12,7 @@ function LoginForm() {
 
   useEffect(() => {
     if (isSuccess) {
-      const ref = location.state.from;
+      const ref = location.state?.from;
       ref
         ? navigate(ref.pathname, { replace: true })
         : navigate('/', { replace: true });
