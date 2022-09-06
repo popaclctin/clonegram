@@ -1,8 +1,8 @@
 import React from 'react';
-import PostsList from '../components/post/PostsList';
+import Feed from '../post/Feed';
 
 function HomePage() {
-  return <PostsList />;
+  return <Feed />;
 }
 
 export default HomePage;

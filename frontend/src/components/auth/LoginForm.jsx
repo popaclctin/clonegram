@@ -1,17 +1,21 @@
 import React, { useEffect } from 'react';
 import { useLoginMutation } from '../../store/authSlice';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useFormik } from 'formik';
 import './AuthForm.style.scss';
 
 function LoginForm() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [loginUser, { isLoading, error, isError, isSuccess }] =
     useLoginMutation();
 
   useEffect(() => {
     if (isSuccess) {
-      navigate('/', { replace: true });
+      const ref = location.state.from;
+      ref
+        ? navigate(ref.pathname, { replace: true })
+        : navigate('/', { replace: true });
     }
   });
 

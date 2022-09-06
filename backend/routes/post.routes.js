@@ -8,7 +8,6 @@ const postController = require('../controllers/post.controller');
 
 router.use(authorizeMiddleware);
 
-router.get('/', postController.getPosts);
 router.get(
   '/:postId',
   param('postId').notEmpty().customSanitizer(sanitizeId),

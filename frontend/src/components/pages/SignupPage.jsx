@@ -1,5 +1,5 @@
 import React from 'react';
-import SignupForm from '../components/auth/SignupForm';
+import SignupForm from '../auth/SignupForm';
 import { Link } from 'react-router-dom';
 import './SignupPage.style.scss';
 

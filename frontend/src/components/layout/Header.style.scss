@@ -1,0 +1,51 @@
+@use '../../styles/variables';
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 1rem;
+  padding: 0 1rem;
+  border-bottom: 1px solid variables.$lightGrey;
+
+  &__logo {
+    font-family: cursive;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  &__search {
+    position: relative;
+    &__icon {
+      position: absolute;
+      top: 50%;
+      left: 5px;
+      transform: translateY(-50%);
+    }
+    &__input {
+      border: 0;
+      background-color: variables.$bgColor;
+      padding: 0.25rem 1.5rem;
+    }
+  }
+
+  &__nav {
+    ul {
+      list-style-type: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      column-gap: 1rem;
+      padding: 0;
+      li {
+        a {
+          text-decoration: none;
+
+          &:visited {
+            color: transparent;
+          }
+        }
+      }
+    }
+  }
+}

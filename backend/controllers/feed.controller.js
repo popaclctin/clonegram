@@ -14,11 +14,10 @@ async function getFeed(req, res, next) {
     return next(httpError);
   }
 
-  const { userId } = req.params;
   const { page = 1, limit = 10 } = req.query;
 
   try {
-    const user = await User.findById(userId).exec();
+    const user = await User.findById(req.user._id).exec();
 
     const feedPosts = await Post.find({
       user: { $in: user.following },

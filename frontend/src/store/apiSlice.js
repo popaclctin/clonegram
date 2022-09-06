@@ -14,9 +14,9 @@ export const apiSlice = createApi({
   }),
   tagtypes: ['Post'],
   endpoints: (build) => ({
-    getPosts: build.query({
-      query: () => '/post',
-      providesTags: (result = [], error, arg) => [
+    getPostsByUsername: build.query({
+      query: (username) => ({ url: `user/${username}` }),
+      providesTags: (result = { posts: [] }, error, arg) => [
         { type: 'Post', id: 'LIST' },
         ...result.posts.map(({ _id }) => ({ type: 'Post', id: _id })),
       ],
@@ -55,13 +55,21 @@ export const apiSlice = createApi({
         { type: 'Post', id: postId },
       ],
     }),
+    getFeed: build.query({
+      query: () => '/feed',
+      providesTags: (result = { posts: [] }, error) => [
+        { type: 'Post', id: 'LIST' },
+        ...result.posts.map(({ _id }) => ({ type: 'Post', id: _id })),
+      ],
+    }),
   }),
 });
 
 export const {
-  useGetPostsQuery,
+  useGetPostsByUsernameQuery,
   useGetPostByIdQuery,
   useCreatePostMutation,
   useEditPostMutation,
   useDeletePostMutation,
+  useGetFeedQuery,
 } = apiSlice;
