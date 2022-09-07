@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, Fragment } from 'react';
 import { API_URL } from '../../config/config';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -21,65 +21,80 @@ import {
 import { useAuth } from '../../hooks/useAuth';
 import { useFormik } from 'formik';
 import './PostExcerpt.style.scss';
+import Modal from '../ui/Modal';
 
 function PostExcerpt({ post }) {
+  const [showModal, setShowModal] = useState(false);
+
+  const toggleModal = () => {
+    setShowModal((prevState) => !prevState);
+  };
+
   const { data: likesData, isSuccess: isSuccessGetPostLikes } =
     useGetPostLikesQuery({ postId: post._id });
   const { data: commentsData, isSuccess: isSuccessGetComments } =
     useGetCommentsQuery({ postId: post._id });
 
   return (
-    <article key={post.key} className='postItem'>
-      <div className='postItem__header'>
-        <Link to={`user/${post.user.username}`} className='postItem__username'>
-          {post.user.username}
-        </Link>
-        <FontAwesomeIcon icon={faEllipsis} />
-      </div>
-      <div className='postItem__image'>
-        <img src={`${API_URL}/uploads/${post.image.name}`} width='300' />
-      </div>
-      <div className='postItem__footer'>
-        <div className='postItem__menu'>
-          <LikeBtn postId={post._id} />
-          <FontAwesomeIcon icon={faComment} />
-        </div>
-        <div className='postItem__likes'>
-          {isSuccessGetPostLikes && likesData.totalCount} likes
-        </div>
-        <div className='postItem__caption'>
-          <p>
-            <Link
-              to={`user/${post.user.username}`}
-              className='postItem__username'
-            >
-              {post.user.username}
-            </Link>{' '}
-            {post.caption}
-          </p>
-        </div>
-        <div className='postItem__comments'>
-          {isSuccessGetComments &&
-            (commentsData.totalCount > 0 ? (
-              <Link to={`/post/${post._id}`}>
-                {`View all ${commentsData.totalCount} comments`}
-              </Link>
-            ) : (
-              <p>There are no comments</p>
-            ))}
-        </div>
-        <div className='postItem__timeDistance'>
-          <Link to={`/post/${post._id}`}>
-            {formatDistance(new Date(post.createdAt), new Date(), {
-              addSuffix: true,
-            })}
+    <Fragment>
+      {showModal && <PostModal onClose={toggleModal} />}
+      <article key={post.key} className='postItem'>
+        <div className='postItem__header'>
+          <Link
+            to={`user/${post.user.username}`}
+            className='postItem__username'
+          >
+            {post.user.username}
           </Link>
+          <button onClick={toggleModal}>
+            <FontAwesomeIcon icon={faEllipsis} />
+          </button>
         </div>
-      </div>
-      <div className='postItem__commentInput'>
-        <CommentInput postId={post._id} />
-      </div>
-    </article>
+        <div className='postItem__image'>
+          <img src={`${API_URL}/uploads/${post.image.name}`} width='300' />
+        </div>
+        <div className='postItem__footer'>
+          <div className='postItem__menu'>
+            <LikeBtn postId={post._id} />
+            <FontAwesomeIcon icon={faComment} />
+          </div>
+          <div className='postItem__likes'>
+            {isSuccessGetPostLikes && likesData.totalCount} likes
+          </div>
+          <div className='postItem__caption'>
+            <p>
+              <Link
+                to={`user/${post.user.username}`}
+                className='postItem__username'
+              >
+                {post.user.username}
+              </Link>{' '}
+              {post.caption}
+            </p>
+          </div>
+          <div className='postItem__comments'>
+            {isSuccessGetComments &&
+              (commentsData.totalCount > 0 ? (
+                <Link to={`/post/${post._id}`}>
+                  {`View all ${commentsData.totalCount} comments`}
+                </Link>
+              ) : (
+                <p>There are no comments</p>
+              ))}
+          </div>
+          <div className='postItem__timeDistance'>
+            <Link to={`/post/${post._id}`}>
+              {formatDistance(new Date(post.createdAt), new Date(), {
+                addSuffix: true,
+              })}
+            </Link>
+          </div>
+        </div>
+        <div className='postItem__commentInput'>
+          <CommentInput postId={post._id} />
+        </div>
+      </article>
+    </Fragment>
   );
 }
 
@@ -164,6 +179,19 @@ const CommentInput = ({ postId }) => {
         Post
       </button>
     </form>
+  );
+};
+
+const PostModal = (props) => {
+  return (
+    <Modal onClose={props.onClose}>
+      <ul>
+        <li>Delete</li>
+        <li>Unfollow</li>
+        <li>Go to post</li>
+        <li>Cancel</li>
+      </ul>
+    </Modal>
   );
 };
 

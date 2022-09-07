@@ -4,6 +4,8 @@ import LoadingSpinner from '../ui/LoadingSpinner';
 
 import PostsList from './PostsList';
 
+import './Feed.style.scss';
+
 function Feed() {
   const { data, isLoading, isSuccess, isError, error } = useGetFeedQuery();
 
@@ -17,7 +19,7 @@ function Feed() {
     content = <div>{JSON.stringify(error)}</div>;
   }
 
-  return <section>{content}</section>;
+  return <section className='feed'>{content}</section>;
 }
 
 export default Feed;
