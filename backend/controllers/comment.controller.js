@@ -3,9 +3,41 @@ const createHttpError = require('http-errors');
 
 const Comment = require('../models/Comment');
 
+module.exports.getAllComments = getAllComments;
 module.exports.createComment = createComment;
 module.exports.updateComment = updateComment;
 module.exports.deleteComment = deleteComment;
+
+async function getAllComments(req, res, next) {
+  //check for validation errors
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const httpError = createHttpError(400, { invalidParams: errors.array() });
+    return next(httpError);
+  }
+
+  const { page = 1, limit = 5, postId } = req.query;
+
+  try {
+    const comments = await Comment.find({
+      post: postId,
+    })
+      .sort({ createdAt: -1 })
+      .limit(limit)
+      .skip((page - 1) * limit)
+      .exec();
+
+    const count = await Comment.countDocuments({ post: postId }).exec();
+    return res.status(200).json({
+      comments,
+      totalCount: count,
+      totalPages: Math.ceil(count / limit),
+      currentPage: page,
+    });
+  } catch (err) {
+    return next(createHttpError(500, err));
+  }
+}
 
 async function createComment(req, res, next) {
   //check for validation errors
@@ -15,7 +47,8 @@ async function createComment(req, res, next) {
     return next(httpError);
   }
 
-  const { userId, postId, content } = req.body;
+  const userId = req.user._id;
+  const { postId, content } = req.body;
   try {
     await Comment.create({
       user: userId,

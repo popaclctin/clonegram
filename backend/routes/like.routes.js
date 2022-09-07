@@ -7,18 +7,14 @@ const likeController = require('../controllers/like.controller');
 
 router.use(authorizeMiddleware);
 
-router.get(
-  '/',
-  query('post').notEmpty().customSanitizer(sanitizeId),
-  query('user').customSanitizer(sanitizeId),
-  likeController.getAllLikes
-);
+router.get('/', query('postId').notEmpty(), likeController.getAllLikes);
 
 router.post(
   '/',
-  body('post').notEmpty().customSanitizer(sanitizeId),
+  body('postId').notEmpty().customSanitizer(sanitizeId),
   likeController.createPostLike
 );
+
 router.delete(
   '/:likeId',
   param('likeId').notEmpty().customSanitizer(sanitizeId),

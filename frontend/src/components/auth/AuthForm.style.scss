@@ -16,8 +16,8 @@
   text-align: center;
 
   &__title {
-    font-size: 2rem;
-    font-family: cursive;
+    font-family: variables.$logoFontFamily;
+    font-size: 3rem;
     font-weight: bold;
   }
 

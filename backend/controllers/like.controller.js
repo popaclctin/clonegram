@@ -15,41 +15,24 @@ async function getAllLikes(req, res, next) {
     return next(httpError);
   }
 
-  const { post, user, page = 1, limit = 20 } = req.query;
+  const { postId, userId, page = 1, limit = 20 } = req.query;
+
+  const queryArgs = userId ? { post: postId, user: userId } : { post: postId };
 
   try {
-    const likes = await Like.find({ post, user })
+    const likes = await Like.find(queryArgs)
       .sort({ createdAt: -1 })
       .limit(limit)
       .skip((page - 1) * limit)
       .exec();
 
-    const count = await Like.countDocuments({ post, user }).exec();
-    res.status(200).json({ likes, totalCount: count });
-  } catch (err) {
-    return next(createHttpError(500, err));
-  }
-}
-
-async function getLike(req, res, next) {
-  //check for validation errors
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    const httpError = createHttpError(400, { invalidParams: errors.array() });
-    return next(httpError);
-  }
-
-  const { post, user, page = 1, limit = 20 } = req.query;
-
-  try {
-    const likes = await Like.find({ post, user })
-      .sort({ createdAt: -1 })
-      .limit(limit)
-      .skip((page - 1) * limit)
-      .exec();
-
-    const count = await Like.countDocuments({ post, user }).exec();
-    res.status(200).json({ likes, totalCount: count });
+    const count = await Like.countDocuments(queryArgs).exec();
+    res.status(200).json({
+      likes,
+      totalCount: count,
+      totalPages: Math.ceil(count / limit),
+      currentPage: page,
+    });
   } catch (err) {
     return next(createHttpError(500, err));
   }
@@ -64,11 +47,11 @@ async function createPostLike(req, res, next) {
   }
 
   const userId = req.user._id;
-  const { post } = req.body;
+  const { postId } = req.body;
   try {
     await Like.create({
       user: userId,
-      post,
+      post: postId,
     });
     return res.status(201).json({
       message: 'Like created',

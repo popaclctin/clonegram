@@ -12,7 +12,7 @@ export const apiSlice = createApi({
       return headers;
     },
   }),
-  tagtypes: ['Post', 'Like'],
+  tagtypes: ['Post', 'Like', 'Comment'],
   endpoints: (build) => ({
     getPostsByUsername: build.query({
       query: (username) => ({ url: `user/${username}` }),
@@ -29,7 +29,7 @@ export const apiSlice = createApi({
     }),
     createPost: build.mutation({
       query: (body) => ({
-        url: '/posts',
+        url: 'posts',
         method: 'POST',
         body,
       }),
@@ -37,7 +37,7 @@ export const apiSlice = createApi({
     }),
     editPost: build.mutation({
       query: (options) => ({
-        url: `/posts/${options.postId}`,
+        url: `posts/${options.postId}`,
         method: 'PATCH',
         body: options.body,
       }),
@@ -47,7 +47,7 @@ export const apiSlice = createApi({
     }),
     deletePost: build.mutation({
       query: (postId) => ({
-        url: `/posts/${postId}`,
+        url: `posts/${postId}`,
         method: 'DELETE',
       }),
       invalidatesTags: (result, error, postId) => [
@@ -56,7 +56,7 @@ export const apiSlice = createApi({
       ],
     }),
     getFeed: build.query({
-      query: () => '/feed',
+      query: () => 'feed',
       providesTags: (result = { posts: [] }, error) => [
         { type: 'Post', id: 'LIST' },
         ...result.posts.map(({ _id }) => ({ type: 'Post', id: _id })),
@@ -79,7 +79,7 @@ export const apiSlice = createApi({
     }),
     createPostLike: build.mutation({
       query: (body) => ({
-        url: '/likes',
+        url: 'likes',
         method: 'POST',
         body,
       }),
@@ -87,10 +87,25 @@ export const apiSlice = createApi({
     }),
     deleteLike: build.mutation({
       query: (likeId) => ({
-        url: `/likes/${likeId}`,
+        url: `likes/${likeId}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Like'],
+    }),
+    getComments: build.query({
+      query: (params) => ({ url: `comments`, params }),
+      providesTags: ['Comment'],
+    }),
+    createComment: build.mutation({
+      query: (body) => ({ url: 'comments', method: 'POST', body }),
+      invalidatesTags: ['Comment'],
+    }),
+    deleteComment: build.mutation({
+      query: (commentId) => ({
+        url: `comments/${commentId}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Comment'],
     }),
   }),
 });
@@ -107,4 +122,7 @@ export const {
   useGetPostLikesQuery,
   useCreatePostLikeMutation,
   useDeleteLikeMutation,
+  useGetCommentsQuery,
+  useCreateCommentMutation,
+  useDeleteCommentMutation,
 } = apiSlice;

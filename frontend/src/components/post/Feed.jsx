@@ -17,12 +17,7 @@ function Feed() {
     content = <div>{JSON.stringify(error)}</div>;
   }
 
-  return (
-    <section>
-      <h2>Feed</h2>
-      {content}
-    </section>
-  );
+  return <section>{content}</section>;
 }
 
 export default Feed;

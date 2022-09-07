@@ -9,9 +9,16 @@
   border-bottom: 1px solid variables.$lightGrey;
 
   &__logo {
-    font-family: cursive;
+    font-family: variables.$logoFontFamily;
     font-size: 1.5rem;
     font-weight: bold;
+    a {
+      text-decoration: none;
+
+      &:visited {
+        color: inherit;
+      }
+    }
   }
 
   &__search {
