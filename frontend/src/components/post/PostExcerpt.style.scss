@@ -1,0 +1,48 @@
+@use '../../styles/variables';
+@use '../../styles/mixins';
+
+.postItem {
+  border: 1px solid variables.$lightGrey;
+  border-radius: 10px;
+
+  &__header {
+    margin: variables.$postMargin;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__username {
+    text-decoration: none;
+  }
+
+  &__image {
+    img {
+      object-fit: cover;
+      width: 100%;
+    }
+  }
+
+  &__footer {
+    margin: variables.$postMargin;
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.25rem;
+  }
+  &__menu {
+    display: flex;
+    column-gap: 1rem;
+  }
+  &__likes {
+  }
+  &__comments {
+  }
+  &__timeDistance {
+    a {
+      text-decoration: none;
+    }
+  }
+
+  @include mixins.breakpoint-up(desktop) {
+  }
+}

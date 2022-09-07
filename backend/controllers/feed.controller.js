@@ -22,6 +22,8 @@ async function getFeed(req, res, next) {
     const feedPosts = await Post.find({
       user: { $in: user.following },
     })
+      .populate({ path: 'user', select: 'username' })
+      .populate('comments')
       .sort({ createdAt: -1 })
       .limit(limit)
       .skip((page - 1) * limit)

@@ -12,7 +12,7 @@ export const apiSlice = createApi({
       return headers;
     },
   }),
-  tagtypes: ['Post'],
+  tagtypes: ['Post', 'Like'],
   endpoints: (build) => ({
     getPostsByUsername: build.query({
       query: (username) => ({ url: `user/${username}` }),
@@ -22,14 +22,14 @@ export const apiSlice = createApi({
       ],
     }),
     getPostById: build.query({
-      query: (postId) => ({ url: `post/${postId}` }),
+      query: (postId) => ({ url: `posts/${postId}` }),
       providesTags: (result = [], error, postId) => [
         { type: 'Post', id: postId },
       ],
     }),
     createPost: build.mutation({
       query: (body) => ({
-        url: '/post',
+        url: '/posts',
         method: 'POST',
         body,
       }),
@@ -37,7 +37,7 @@ export const apiSlice = createApi({
     }),
     editPost: build.mutation({
       query: (options) => ({
-        url: `/post/${options.postId}`,
+        url: `/posts/${options.postId}`,
         method: 'PATCH',
         body: options.body,
       }),
@@ -47,7 +47,7 @@ export const apiSlice = createApi({
     }),
     deletePost: build.mutation({
       query: (postId) => ({
-        url: `/post/${postId}`,
+        url: `/posts/${postId}`,
         method: 'DELETE',
       }),
       invalidatesTags: (result, error, postId) => [
@@ -73,6 +73,25 @@ export const apiSlice = createApi({
     searchUser: build.query({
       query: (searchTerm) => ({ url: `search`, params: { query: searchTerm } }),
     }),
+    getPostLikes: build.query({
+      query: (params) => ({ url: `likes`, params }),
+      providesTags: ['Like'],
+    }),
+    createPostLike: build.mutation({
+      query: (body) => ({
+        url: '/likes',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['Like'],
+    }),
+    deleteLike: build.mutation({
+      query: (likeId) => ({
+        url: `/likes/${likeId}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Like'],
+    }),
   }),
 });
 
@@ -85,4 +104,7 @@ export const {
   useGetFeedQuery,
   useFollowUserMutation,
   useSearchUserQuery,
+  useGetPostLikesQuery,
+  useCreatePostLikeMutation,
+  useDeleteLikeMutation,
 } = apiSlice;

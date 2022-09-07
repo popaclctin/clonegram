@@ -1,15 +1,23 @@
 const express = require('express');
 const router = express.Router();
-const { body, param } = require('express-validator');
+const { body, param, query } = require('express-validator');
 const { sanitizeId } = require('../utils/sanitizers');
-
+const authorizeMiddleware = require('../middlewares/authorize');
 const likeController = require('../controllers/like.controller');
+
+router.use(authorizeMiddleware);
+
+router.get(
+  '/',
+  query('post').notEmpty().customSanitizer(sanitizeId),
+  query('user').customSanitizer(sanitizeId),
+  likeController.getAllLikes
+);
 
 router.post(
   '/',
-  body('userId').notEmpty().customSanitizer(sanitizeId),
-  body('postId').notEmpty().customSanitizer(sanitizeId),
-  likeController.createLike
+  body('post').notEmpty().customSanitizer(sanitizeId),
+  likeController.createPostLike
 );
 router.delete(
   '/:likeId',

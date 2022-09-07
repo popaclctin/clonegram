@@ -2,7 +2,7 @@ import React from 'react';
 import { useGetFeedQuery } from '../../store/apiSlice';
 import LoadingSpinner from '../ui/LoadingSpinner';
 
-import PostExcerpt from './PostExcerpt';
+import PostsList from './PostsList';
 
 function Feed() {
   const { data, isLoading, isSuccess, isError, error } = useGetFeedQuery();
@@ -12,9 +12,7 @@ function Feed() {
   if (isLoading) {
     content = <LoadingSpinner />;
   } else if (isSuccess) {
-    content = data.posts.map((post) => (
-      <PostExcerpt key={post._id} post={post} />
-    ));
+    content = <PostsList posts={data.posts} />;
   } else if (isError) {
     content = <div>{JSON.stringify(error)}</div>;
   }
