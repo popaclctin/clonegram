@@ -32,6 +32,7 @@ function SearchInput() {
         className='header__search__input'
         value={searchTerm}
         onChange={changeHandler}
+        onFocus={() => setShowResults(true)}
       />
       {isSuccess
         ? showResults && (
@@ -53,7 +54,7 @@ const SearchResults = ({ users, onClose }) => {
     <div ref={modalRef} className='header__search__results'>
       <ul>
         {users.map((user) => (
-          <li key={user._id}>
+          <li key={user._id} onClick={onClose}>
             <Link to={`/${user.username}`}>
               <p className='header__search__results__username'>
                 {user.username}

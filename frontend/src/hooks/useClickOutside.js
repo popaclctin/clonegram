@@ -10,10 +10,10 @@ function useClickOutside(handler) {
       }
     };
 
-    document.addEventListener('click', maybeHandler);
+    document.addEventListener('mousedown', maybeHandler);
 
     return () => {
-      document.removeEventListener('click', maybeHandler);
+      document.removeEventListener('mousedown', maybeHandler);
     };
   });
 

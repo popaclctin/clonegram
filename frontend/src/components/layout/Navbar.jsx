@@ -10,6 +10,7 @@ import './Navbar.style.scss';
 import { useDispatch } from 'react-redux';
 import { useAuth } from '../../hooks/useAuth';
 import { resetCredentials } from '../../store/authSlice';
+import useClickOutside from '../../hooks/useClickOutside';
 
 function Navbar() {
   const [showUserModal, setShowUserModal] = useState(false);
@@ -29,30 +30,31 @@ function Navbar() {
         </li>
         <li>
           <button
-            onClick={() => setShowUserModal((prevState) => !prevState)}
+            onClick={() => setShowUserModal(true)}
             className='header__nav__userBtn'
           >
             <FontAwesomeIcon icon={faCircleUser} size='xl' />
           </button>
         </li>
       </ul>
-      {showUserModal && <UserModal />}
+      {showUserModal && <UserModal onClose={() => setShowUserModal(false)} />}
     </nav>
   );
 }
 
-const UserModal = () => {
+const UserModal = ({ onClose }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const modalRef = useClickOutside(onClose);
   const auth = useAuth();
   const logoutHandler = () => {
     dispatch(resetCredentials());
     navigate('/login', { replace: true });
   };
   return (
-    <div className='userModal'>
+    <div className='userModal' ref={modalRef}>
       <ul>
-        <li>
+        <li onClick={onClose}>
           <button
             onClick={() => {
               navigate(`/${auth.user.username}`);
