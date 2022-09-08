@@ -1,0 +1,60 @@
+@use '../../styles/variables';
+
+.header__nav {
+  position: relative;
+  ul {
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: 1.5rem;
+    padding: 0;
+    li {
+      a {
+        text-decoration: none;
+
+        &:visited {
+          color: transparent;
+        }
+      }
+    }
+  }
+
+  &__userBtn {
+    padding: 0;
+    border: 0;
+    background-color: white;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.userModal {
+  position: absolute;
+  right: 0;
+  box-shadow: 0 0 7px rgba(0, 0, 0, 0.1);
+  ul {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    li {
+      width: 100%;
+      button {
+        width: 100%;
+        padding: 0.5rem 1rem;
+        border: 0;
+        background-color: white;
+        text-align: left;
+        font-size: 0.875rem;
+
+        &:hover {
+          cursor: pointer;
+          background-color: variables.$lightGrey;
+        }
+      }
+    }
+  }
+}
