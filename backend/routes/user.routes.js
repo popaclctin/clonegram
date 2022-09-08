@@ -9,6 +9,7 @@ const userController = require('../controllers/user.controller');
 router.use(authorizeMiddleware);
 
 router.get('/:username', userController.getPostsByUsername);
-router.post('/follow', userController.followUser);
+router.post('/:username/follow', userController.followUser);
+router.delete('/:username/follow', userController.unfollowUser);
 
 module.exports = router;

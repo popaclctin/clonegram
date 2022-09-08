@@ -21,8 +21,8 @@ function Profile() {
     },
   ] = useFollowUserMutation();
 
-  const followHandler = (event) => {
-    followUser({ username });
+  const followHandler = () => {
+    followUser(username);
   };
 
   useEffect(() => {

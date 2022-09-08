@@ -15,7 +15,7 @@ export const apiSlice = createApi({
   tagtypes: ['Post', 'Like', 'Comment'],
   endpoints: (build) => ({
     getPostsByUsername: build.query({
-      query: (username) => ({ url: `user/${username}` }),
+      query: (username) => ({ url: `${username}` }),
       providesTags: (result = { posts: [] }, error, arg) => [
         { type: 'Post', id: 'LIST' },
         ...result.posts.map(({ _id }) => ({ type: 'Post', id: _id })),
@@ -63,10 +63,16 @@ export const apiSlice = createApi({
       ],
     }),
     followUser: build.mutation({
-      query: (body) => ({
-        url: `user/follow`,
+      query: (username) => ({
+        url: `${username}/follow`,
         method: 'POST',
-        body,
+      }),
+      invalidatesTags: [{ type: 'Post', id: 'LIST' }],
+    }),
+    unfollowUser: build.mutation({
+      query: (username) => ({
+        url: `${username}/follow`,
+        method: 'DELETE',
       }),
       invalidatesTags: [{ type: 'Post', id: 'LIST' }],
     }),
@@ -118,6 +124,7 @@ export const {
   useDeletePostMutation,
   useGetFeedQuery,
   useFollowUserMutation,
+  useUnfollowUserMutation,
   useSearchUserQuery,
   useGetPostLikesQuery,
   useCreatePostLikeMutation,

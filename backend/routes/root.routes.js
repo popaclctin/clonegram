@@ -13,7 +13,7 @@ rootRouter.use('/posts', post);
 rootRouter.use('/likes', like);
 rootRouter.use('/search', search);
 rootRouter.use('/feed', feed);
-rootRouter.use('/user', user);
 rootRouter.use('/comments', comment);
+rootRouter.use('/', user);
 
 module.exports = rootRouter;

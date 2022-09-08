@@ -1,4 +1,5 @@
 import React, { useState, Fragment } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { API_URL } from '../../config/config';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -17,6 +18,7 @@ import {
   useGetPostLikesQuery,
   useGetCommentsQuery,
   useCreateCommentMutation,
+  useUnfollowUserMutation,
 } from '../../store/apiSlice';
 import { useAuth } from '../../hooks/useAuth';
 import { useFormik } from 'formik';
@@ -37,16 +39,13 @@ function PostExcerpt({ post }) {
 
   return (
     <Fragment>
-      {showModal && <PostModal onClose={toggleModal} />}
+      {showModal && <OptionsModal onClose={toggleModal} post={post} />}
       <article key={post.key} className='postItem'>
         <div className='postItem__header'>
-          <Link
-            to={`user/${post.user.username}`}
-            className='postItem__username'
-          >
+          <Link to={`/${post.user.username}`} className='postItem__username'>
             {post.user.username}
           </Link>
-          <button onClick={toggleModal}>
+          <button onClick={toggleModal} className='postItem__optionsBtn'>
             <FontAwesomeIcon icon={faEllipsis} />
           </button>
         </div>
@@ -56,7 +55,9 @@ function PostExcerpt({ post }) {
         <div className='postItem__footer'>
           <div className='postItem__menu'>
             <LikeBtn postId={post._id} />
-            <FontAwesomeIcon icon={faComment} />
+            <Link to={`/post/${post._id}`} className='postItem__commentBtn'>
+              <FontAwesomeIcon icon={faComment} />
+            </Link>
           </div>
           <div className='postItem__likes'>
             {isSuccessGetPostLikes && likesData.totalCount} likes
@@ -64,7 +65,7 @@ function PostExcerpt({ post }) {
           <div className='postItem__caption'>
             <p>
               <Link
-                to={`user/${post.user.username}`}
+                to={`/${post.user.username}`}
                 className='postItem__username'
               >
                 {post.user.username}
@@ -182,14 +183,29 @@ const CommentInput = ({ postId }) => {
   );
 };
 
-const PostModal = (props) => {
+const OptionsModal = (props) => {
+  const [unfollowUser] = useUnfollowUserMutation();
+  const navigate = useNavigate();
   return (
     <Modal onClose={props.onClose}>
-      <ul>
-        <li>Delete</li>
-        <li>Unfollow</li>
-        <li>Go to post</li>
-        <li>Cancel</li>
+      <ul className='optionsModal'>
+        <li className='optionsModal__option optionsModal__option--red'>
+          <button
+            onClick={() => {
+              unfollowUser(props.post.user.username);
+            }}
+          >
+            Unfollow
+          </button>
+        </li>
+        <li className='optionsModal__option'>
+          <button onClick={() => navigate(`/post/${props.post._id}`)}>
+            Go to post
+          </button>
+        </li>
+        <li className='optionsModal__option'>
+          <button onClick={props.onClose}>Cancel</button>
+        </li>
       </ul>
     </Modal>
   );

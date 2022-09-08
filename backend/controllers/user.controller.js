@@ -5,6 +5,7 @@ const Post = require('../models/Post');
 const User = require('../models/User');
 
 module.exports.followUser = followUser;
+module.exports.unfollowUser = unfollowUser;
 module.exports.getPostsByUsername = getPostsByUsername;
 
 async function getPostsByUsername(req, res, next) {
@@ -50,7 +51,7 @@ async function followUser(req, res, next) {
   }
 
   const userId = req.user._id;
-  const { username } = req.body;
+  const { username } = req.params;
   try {
     const followee = await User.findOne({ username }).exec();
 
@@ -71,6 +72,52 @@ async function followUser(req, res, next) {
 
     return res.status(200).json({
       message: 'User followed',
+    });
+  } catch (err) {
+    return next(createHttpError(500, err));
+  }
+}
+
+async function unfollowUser(req, res, next) {
+  //check for validation errors
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const httpError = createHttpError(400, { invalidParams: errors.array() });
+    return next(httpError);
+  }
+
+  const userId = req.user._id;
+  const { username } = req.params;
+  try {
+    const followee = await User.findOne({ username }).exec();
+
+    if (!followee) {
+      const httpError = createHttpError(
+        400,
+        'The followed user does not exist'
+      );
+      return next(httpError);
+    }
+    await User.updateOne(
+      { _id: userId },
+      {
+        $pull: {
+          following: followee._id,
+        },
+      }
+    ).exec();
+
+    await User.updateOne(
+      { _id: followee._id },
+      {
+        $pull: {
+          followers: userId,
+        },
+      }
+    ).exec();
+
+    return res.status(200).json({
+      message: 'User unfollowed',
     });
   } catch (err) {
     return next(createHttpError(500, err));
