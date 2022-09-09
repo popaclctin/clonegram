@@ -1,0 +1,15 @@
+@use '../../styles/variables';
+
+.likeBtn {
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+  &:hover {
+    cursor: pointer;
+    opacity: 0.5;
+  }
+
+  &--red {
+    color: variables.$red;
+  }
+}

@@ -44,8 +44,7 @@ async function getPostById(req, res, next) {
   const { postId } = req.params;
 
   try {
-    // const post = await Post.findById(postId).populate('likes', 'comments');
-    const post = await Post.findById(postId).exec();
+    const post = await Post.findById(postId).populate('user').exec();
 
     if (!post) {
       return next(createHttpError(404, 'Post does not exist'));

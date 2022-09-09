@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 const fs = require('fs');
 const { Schema } = mongoose;
-require('./Comment');
+// require('./Comment');
+// require('./User');
 
 const postSchema = new Schema(
   {

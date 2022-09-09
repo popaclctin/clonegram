@@ -1,0 +1,32 @@
+@use '../../styles/variables';
+
+.commentInput {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+
+  &__inputText {
+    width: 100%;
+    border: 0;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &__submitBtn {
+    border: 0;
+    background-color: transparent;
+    color: variables.$blue;
+    font-weight: bold;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:disabled {
+      cursor: default;
+      opacity: 0.5;
+    }
+  }
+}

@@ -16,12 +16,13 @@ async function getAllComments(req, res, next) {
     return next(httpError);
   }
 
-  const { page = 1, limit = 5, postId } = req.query;
+  const { page = 1, limit = 15, postId } = req.query;
 
   try {
     const comments = await Comment.find({
       post: postId,
     })
+      .populate('user', 'username')
       .sort({ createdAt: -1 })
       .limit(limit)
       .skip((page - 1) * limit)

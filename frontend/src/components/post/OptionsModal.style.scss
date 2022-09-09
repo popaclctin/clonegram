@@ -1,0 +1,35 @@
+@use '../../styles/variables';
+
+.options {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 30vw;
+  &__option {
+    width: 100%;
+    font-size: 0.875rem;
+    border-top: 1px solid variables.$lightGrey;
+    &:first-child {
+      border-top: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.9rem 0;
+      border: 0;
+      color: inherit;
+      background: transparent;
+      &:hover {
+        cursor: pointer;
+      }
+      &:active {
+        background-color: variables.$lightGrey;
+      }
+    }
+
+    &--red {
+      color: variables.$red;
+      font-weight: bold;
+    }
+  }
+}

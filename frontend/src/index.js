@@ -8,7 +8,7 @@ import LoginPage from './components/pages/LoginPage';
 import SignupPage from './components/pages/SignupPage';
 import HomePage from './components/pages/HomePage';
 import CreatePost from './components/post/CreatePost';
-import Post from './components/post/Post';
+import PostPage from './components/pages/PostPage';
 import './styles/style.scss';
 import Profile from './components/user/Profile';
 
@@ -20,7 +20,7 @@ root.render(
         <Route path='/' element={<App />}>
           <Route index element={<HomePage />} />
           <Route path='post'>
-            <Route path=':postId' element={<Post />} />
+            <Route path=':postId' element={<PostPage />} />
             <Route path='create' element={<CreatePost />} />
           </Route>
           <Route path=':username' element={<Profile />} />

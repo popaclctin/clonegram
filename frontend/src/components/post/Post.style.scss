@@ -1,0 +1,134 @@
+@use '../../styles/variables';
+
+.post {
+  $padding: 1rem;
+
+  display: flex;
+  max-width: 58rem;
+  min-height: 28rem;
+  font-size: 0.875rem;
+  background-color: white;
+  border: 1px solid variables.$lightGrey;
+  border-radius: 3px;
+
+  &__image {
+    flex: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: variables.$bgColor;
+  }
+
+  &__body {
+    flex: 1;
+    margin: 0;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $padding;
+    border-bottom: 1px solid variables.$lightGrey;
+  }
+
+  &__author {
+    display: flex;
+    align-items: center;
+    column-gap: 0.5rem;
+    text-decoration: none;
+    &:visited {
+      color: black;
+    }
+
+    &__icon {
+      font-size: 1.75rem;
+      color: variables.$grey;
+    }
+
+    &__username {
+      font-weight: bold;
+    }
+  }
+
+  &__optionsBtn {
+    border: 0;
+    background-color: transparent;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &__comments {
+    padding: $padding;
+    flex-grow: 0;
+    max-height: 25vh;
+    overflow: auto;
+
+    ul {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      row-gap: 1rem;
+      list-style-type: none;
+    }
+  }
+
+  &__nocomments {
+    color: variables.$grey;
+  }
+
+  &__footer {
+    padding: $padding;
+  }
+
+  &__menu {
+    font-size: 1.5rem;
+  }
+
+  &__likes {
+    font-weight: bold;
+  }
+
+  &__timeDistance {
+    font-size: 0.625rem;
+    text-transform: uppercase;
+
+    a {
+      text-decoration: none;
+      color: variables.$grey;
+      &:visited {
+        color: variables.$grey;
+      }
+      &:active {
+        opacity: 0.5;
+      }
+    }
+  }
+
+  &__commentInput {
+    padding: $padding;
+    border-top: 1px solid variables.$lightGrey;
+  }
+}
+
+.comment {
+  display: flex;
+  column-gap: 0.5rem;
+
+  &__icon {
+    font-size: 1.75rem;
+    color: variables.$grey;
+  }
+
+  &__username {
+    font-weight: bold;
+    margin-right: 0.25rem;
+  }
+
+  &__timeDistance {
+    font-size: 0.75rem;
+    color: variables.$grey;
+  }
+}
