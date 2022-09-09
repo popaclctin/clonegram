@@ -8,12 +8,15 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import './Navbar.style.scss';
 import { useDispatch } from 'react-redux';
-import { useAuth } from '../../hooks/useAuth';
+import useAuth from '../../hooks/useAuth';
 import { resetCredentials } from '../../store/authSlice';
 import useClickOutside from '../../hooks/useClickOutside';
+import Modal from '../ui/Modal';
+import CreatePost from '../post/CreatePost';
 
 function Navbar() {
   const [showUserModal, setShowUserModal] = useState(false);
+  const [showCreatePostModal, setShowCreatePostModal] = useState(false);
 
   return (
     <nav className='header__nav'>
@@ -24,9 +27,12 @@ function Navbar() {
           </NavLink>
         </li>
         <li>
-          <NavLink to='/post/create'>
+          <button
+            onClick={() => setShowCreatePostModal(true)}
+            className='header__nav__createPostBtn'
+          >
             <FontAwesomeIcon icon={faSquarePlus} size='xl' />
-          </NavLink>
+          </button>
         </li>
         <li>
           <button
@@ -38,6 +44,9 @@ function Navbar() {
         </li>
       </ul>
       {showUserModal && <UserModal onClose={() => setShowUserModal(false)} />}
+      {showCreatePostModal && (
+        <CreatePostModal onClose={() => setShowCreatePostModal(false)} />
+      )}
     </nav>
   );
 }
@@ -68,6 +77,14 @@ const UserModal = ({ onClose }) => {
         </li>
       </ul>
     </div>
+  );
+};
+
+const CreatePostModal = ({ onClose }) => {
+  return (
+    <Modal onClose={onClose}>
+      <CreatePost onClose={onClose} />
+    </Modal>
   );
 };
 

@@ -1,0 +1,91 @@
+@use '../../styles/variables';
+
+.createPost {
+  // min-height: 50vh;
+
+  width: 50vw;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  &__header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 1rem;
+    padding: 0.5rem;
+    border-bottom: 1px solid variables.$lightGrey;
+  }
+
+  &__title {
+    margin: 0 auto;
+    font-weight: bold;
+  }
+
+  &__submitBtn {
+    position: absolute;
+    right: 0;
+    border: 0;
+    background-color: transparent;
+    color: variables.$blue;
+    font-weight: bold;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:disabled {
+      cursor: default;
+      opacity: 0.5;
+    }
+  }
+
+  &__body {
+    display: flex;
+    height: 100%;
+    margin-bottom: 1rem;
+  }
+
+  &__image {
+    flex: 2;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &__selectBtn {
+      padding: 0.25rem 0.5rem;
+      margin-top: 1rem;
+      color: white;
+      border: 0;
+      border-radius: 4px;
+      background-color: variables.$blue;
+    }
+
+    &__inputFile {
+      display: none;
+    }
+  }
+
+  &__caption {
+    flex: 1;
+    margin: 1rem;
+
+    &__username {
+      display: flex;
+      column-gap: 0.5rem;
+      margin-bottom: 0.5rem;
+      p {
+        font-weight: bold;
+      }
+    }
+
+    &__textarea {
+      width: 100%;
+      min-height: 10rem;
+      max-height: 10rem;
+      padding: 0.5rem;
+      border: 0;
+    }
+  }
+}

@@ -29,6 +29,16 @@
       cursor: pointer;
     }
   }
+
+  &__createPostBtn {
+    padding: 0;
+    border: 0;
+    background-color: white;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
 
 .userModal {

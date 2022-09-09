@@ -20,15 +20,15 @@ import {
   useCreateCommentMutation,
   useUnfollowUserMutation,
 } from '../../store/apiSlice';
-import { useAuth } from '../../hooks/useAuth';
+import useAuth from '../../hooks/useAuth';
 import { useFormik } from 'formik';
 import './PostExcerpt.style.scss';
 import Modal from '../ui/Modal';
 
 function PostExcerpt({ post }) {
-  const [showModal, setShowModal] = useState(false);
+  const [showOptionsModal, setShowOptionsModal] = useState(false);
 
-  const toggleModal = () => {
+  const toggleOptionsModal = () => {
     setShowModal((prevState) => !prevState);
   };
 
@@ -39,13 +39,18 @@ function PostExcerpt({ post }) {
 
   return (
     <Fragment>
-      {showModal && <OptionsModal onClose={toggleModal} post={post} />}
+      {showOptionsModal && (
+        <OptionsModal onClose={() => setShowOptionsModal(false)} post={post} />
+      )}
       <article key={post.key} className='postItem'>
         <div className='postItem__header'>
           <Link to={`/${post.user.username}`} className='postItem__username'>
             {post.user.username}
           </Link>
-          <button onClick={toggleModal} className='postItem__optionsBtn'>
+          <button
+            onClick={() => setShowOptionsModal(true)}
+            className='postItem__optionsBtn'
+          >
             <FontAwesomeIcon icon={faEllipsis} />
           </button>
         </div>

@@ -5,26 +5,23 @@ import './Modal.style.scss';
 const portalElement = document.getElementById('overlays');
 
 const Backdrop = (props) => {
-  return <div onClick={props.onClose} className='backdrop'></div>;
-};
-
-const ModalOverlay = (props) => {
   return (
-    <div className='modal'>
-      <div className='modal__content'>{props.children}</div>
+    <div onClick={props.onClose} className='backdrop'>
+      {props.children}
     </div>
   );
 };
 
+const ModalOverlay = (props) => {
+  return <div className='modal'>{props.children}</div>;
+};
+
 function Modal(props) {
-  return (
-    <Fragment>
-      {createPortal(<Backdrop onClose={props.onClose} />, portalElement)}
-      {createPortal(
-        <ModalOverlay>{props.children}</ModalOverlay>,
-        portalElement
-      )}
-    </Fragment>
+  return createPortal(
+    <Backdrop onClose={props.onClose}>
+      <ModalOverlay>{props.children}</ModalOverlay>
+    </Backdrop>,
+    portalElement
   );
 }
 
