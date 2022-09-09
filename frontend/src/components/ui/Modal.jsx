@@ -5,11 +5,7 @@ import './Modal.style.scss';
 const portalElement = document.getElementById('overlays');
 
 const Backdrop = (props) => {
-  return (
-    <div onClick={props.onClose} className='backdrop'>
-      {props.children}
-    </div>
-  );
+  return <div onClick={props.onClose} className='backdrop'></div>;
 };
 
 const ModalOverlay = (props) => {
@@ -17,11 +13,14 @@ const ModalOverlay = (props) => {
 };
 
 function Modal(props) {
-  return createPortal(
-    <Backdrop onClose={props.onClose}>
-      <ModalOverlay>{props.children}</ModalOverlay>
-    </Backdrop>,
-    portalElement
+  return (
+    <Fragment>
+      {createPortal(<Backdrop onClose={props.onClose} />, portalElement)}
+      {createPortal(
+        <ModalOverlay>{props.children}</ModalOverlay>,
+        portalElement
+      )}
+    </Fragment>
   );
 }
 
