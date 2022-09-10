@@ -6,6 +6,7 @@ import {
 } from '../../store/apiSlice';
 import Modal from '../ui/Modal';
 import useAuth from '../../hooks/useAuth';
+import { toast } from 'react-toastify';
 import './OptionsModal.style.scss';
 
 export default function OptionsModal({ post, onClose }) {
@@ -26,6 +27,7 @@ export default function OptionsModal({ post, onClose }) {
               onClick={() => {
                 deletePost(post._id);
                 onClose();
+                toast.success('Post deleted');
                 navigate(`/${auth.user.username}`, { replace: true });
               }}
             >
@@ -33,7 +35,7 @@ export default function OptionsModal({ post, onClose }) {
             </button>
           </li>
           <li className='options__option'>
-            <button onClick={() => alert('Edit the post')}>Edit</button>
+            <button onClick={() => toast.success('Post edited')}>Edit</button>
           </li>
           <li className='options__option'>
             <button onClick={onClose}>Cancel</button>

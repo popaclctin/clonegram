@@ -18,14 +18,8 @@ module.exports = {
       template: path.join(__dirname, 'public', 'index.html'),
       favicon: path.join(__dirname, 'public', 'favicon.ico'),
     }),
-    // new CopyPlugin({
-    //   patterns: [{ from: './public/favicon.ico', to: 'favicon.ico' }],
-    // }),
   ],
   devServer: {
-    // static: {
-    //   directory: path.join(__dirname, 'build'),
-    // },
     port,
     historyApiFallback: true,
   },
@@ -41,6 +35,10 @@ module.exports = {
       {
         test: /\.(s(a|c)ss)$/,
         use: ['style-loader', 'css-loader', 'sass-loader'],
+      },
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
       },
       {
         test: /\.(png|jpe?g|gif|svg)$/i,

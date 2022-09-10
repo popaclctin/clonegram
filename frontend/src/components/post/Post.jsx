@@ -14,7 +14,6 @@ import LikeBtn from './LikeBtn';
 import CommentInput from './CommentInput';
 import './Post.style.scss';
 
-//TODO: create alert for delete
 //TODO: implement edit
 
 function Post({ post }) {

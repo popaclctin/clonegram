@@ -3,6 +3,7 @@ import { API_URL } from '../../config/config';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
+  faCircleUser,
   faEllipsis,
   faHeart as faHeartSolid,
 } from '@fortawesome/free-solid-svg-icons';
@@ -34,43 +35,50 @@ function PostExcerpt({ post }) {
       {showOptionsModal && (
         <OptionsModal onClose={() => setShowOptionsModal(false)} post={post} />
       )}
-      <article key={post.key} className='postItem'>
-        <div className='postItem__header'>
-          <Link to={`/${post.user.username}`} className='postItem__username'>
-            {post.user.username}
+      <article key={post.key} className='postExcerpt'>
+        <div className='postExcerpt__header'>
+          <Link to={`/${post.user.username}`} className='postExcerpt__author'>
+            <FontAwesomeIcon
+              icon={faCircleUser}
+              size='xl'
+              className='postExcerpt__author__icon'
+            />
+            <span className='postExcerpt__author__username'>
+              {post.user.username}
+            </span>
           </Link>
           <button
             onClick={() => setShowOptionsModal(true)}
-            className='postItem__optionsBtn'
+            className='postExcerpt__optionsBtn'
           >
             <FontAwesomeIcon icon={faEllipsis} />
           </button>
         </div>
-        <div className='postItem__image'>
+        <div className='postExcerpt__image'>
           <img src={`${API_URL}/uploads/${post.image.name}`} />
         </div>
-        <div className='postItem__footer'>
-          <div className='postItem__menu'>
+        <div className='postExcerpt__footer'>
+          <div className='postExcerpt__menu'>
             <LikeBtn postId={post._id} />
-            <Link to={`/post/${post._id}`} className='postItem__commentBtn'>
+            <Link to={`/post/${post._id}`} className='postExcerpt__commentBtn'>
               <FontAwesomeIcon icon={faComment} />
             </Link>
           </div>
-          <div className='postItem__likes'>
+          <div className='postExcerpt__likes'>
             {isSuccessGetPostLikes && likesData.totalCount} likes
           </div>
-          <div className='postItem__caption'>
+          <div className='postExcerpt__caption'>
             <p>
               <Link
                 to={`/${post.user.username}`}
-                className='postItem__username'
+                className='postExcerpt__username'
               >
                 {post.user.username}
               </Link>{' '}
               {post.caption}
             </p>
           </div>
-          <div className='postItem__comments'>
+          <div className='postExcerpt__comments'>
             {isSuccessGetComments &&
               (commentsData.totalCount > 0 ? (
                 <Link to={`/post/${post._id}`}>
@@ -80,7 +88,7 @@ function PostExcerpt({ post }) {
                 <p>There are no comments</p>
               ))}
           </div>
-          <div className='postItem__timeDistance'>
+          <div className='postExcerpt__timeDistance'>
             <Link to={`/post/${post._id}`}>
               {formatDistanceToNowStrict(new Date(post.createdAt), {
                 addSuffix: true,
@@ -88,7 +96,7 @@ function PostExcerpt({ post }) {
             </Link>
           </div>
         </div>
-        <div className='postItem__commentInput'>
+        <div className='postExcerpt__commentInput'>
           <CommentInput postId={post._id} />
         </div>
       </article>

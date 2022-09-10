@@ -2,6 +2,7 @@ import React from 'react';
 import { useGetFeedQuery } from '../../store/apiSlice';
 import PostsList from '../post/PostsList';
 import LoadingSpinner from '../ui/LoadingSpinner';
+
 import './HomePage.style.scss';
 
 function HomePage() {

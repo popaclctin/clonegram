@@ -1,7 +1,7 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import store from './store/store';
 import { Provider } from 'react-redux';
 import LoginPage from './components/pages/LoginPage';
@@ -13,6 +13,7 @@ import './styles/style.scss';
 import Profile from './components/user/Profile';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
   <Provider store={store}>
     <BrowserRouter>
