@@ -14,7 +14,7 @@ import {
 import { formatDistanceToNowStrict } from 'date-fns';
 import {
   useGetPostLikesQuery,
-  useGetCommentsQuery,
+  useGetPostCommentsQuery,
 } from '../../store/apiSlice';
 
 import './PostExcerpt.style.scss';
@@ -26,9 +26,9 @@ function PostExcerpt({ post }) {
   const [showOptionsModal, setShowOptionsModal] = useState(false);
 
   const { data: likesData, isSuccess: isSuccessGetPostLikes } =
-    useGetPostLikesQuery({ postId: post._id });
+    useGetPostLikesQuery(post._id);
   const { data: commentsData, isSuccess: isSuccessGetComments } =
-    useGetCommentsQuery({ postId: post._id });
+    useGetPostCommentsQuery(post._id);
 
   return (
     <Fragment>

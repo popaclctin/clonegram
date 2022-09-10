@@ -23,18 +23,6 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    followers: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-      },
-    ],
-    following: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-      },
-    ],
   },
   {
     virtuals: {

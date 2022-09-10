@@ -3,12 +3,13 @@ const createHttpError = require('http-errors');
 
 const Post = require('../models/Post');
 
+module.exports.getPosts = getPosts;
 module.exports.createPost = createPost;
 module.exports.getPostById = getPostById;
 module.exports.updatePost = updatePost;
 module.exports.deletePost = deletePost;
 
-async function createPost(req, res, next) {
+async function getPosts(req, res, next) {
   //check for validation errors
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -16,18 +17,23 @@ async function createPost(req, res, next) {
     return next(httpError);
   }
 
-  const { caption } = req.body;
+  const { userId } = req.params;
+  const { page = 1, limit = 20 } = req.query;
+
   try {
-    await Post.create({
-      user: req.user._id,
-      caption,
-      image: {
-        name: req.file.filename,
-        path: req.file.path,
-      },
-    });
-    return res.status(201).json({
-      message: 'Post created',
+    const posts = await Post.find({ user: userId })
+      .sort({ createdAt: -1 })
+      .limit(limit)
+      .skip((page - 1) * limit)
+      .exec();
+
+    const postsCount = await Post.countDocuments({ user: userId }).exec();
+
+    res.status(200).json({
+      posts: posts,
+      totalCount: postsCount,
+      totalPages: Math.ceil(postsCount / limit),
+      currentPage: page,
     });
   } catch (err) {
     return next(createHttpError(500, err));
@@ -51,6 +57,32 @@ async function getPostById(req, res, next) {
     }
 
     res.status(200).json(post);
+  } catch (err) {
+    return next(createHttpError(500, err));
+  }
+}
+
+async function createPost(req, res, next) {
+  //check for validation errors
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const httpError = createHttpError(400, { invalidParams: errors.array() });
+    return next(httpError);
+  }
+
+  const { caption } = req.body;
+  try {
+    await Post.create({
+      user: req.user._id,
+      caption,
+      image: {
+        name: req.file.filename,
+        path: req.file.path,
+      },
+    });
+    return res.status(201).json({
+      message: 'Post created',
+    });
   } catch (err) {
     return next(createHttpError(500, err));
   }

@@ -4,40 +4,40 @@ import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons';
 import React from 'react';
 import useAuth from '../../hooks/useAuth';
 import {
-  useCreatePostLikeMutation,
+  useCreateLikeMutation,
   useDeleteLikeMutation,
-  useGetPostLikesQuery,
+  useGetLikeQuery,
 } from '../../store/apiSlice';
 import './LikeBtn.style.scss';
+import LoadingSpinner from '../ui/LoadingSpinner';
 
 export default function LikeBtn({ postId }) {
   const auth = useAuth();
-  const [createLike] = useCreatePostLikeMutation();
+  const [createLike] = useCreateLikeMutation();
   const [deleteLike] = useDeleteLikeMutation();
-  const {
-    data: likesData,
-    isSuccess,
-    isError,
-    error,
-  } = useGetPostLikesQuery({
+  const { data, isLoading, isSuccess, isError, error } = useGetLikeQuery({
     postId,
     userId: auth.user.id,
   });
 
   let content;
 
-  if (isSuccess) {
+  if (isLoading) {
+    content = <LoadingSpinner />;
+  } else if (isSuccess) {
+    content = (
+      <button
+        onClick={() => {
+          deleteLike(data.like._id);
+        }}
+        className='likeBtn likeBtn--red'
+      >
+        <FontAwesomeIcon icon={faHeartSolid} />
+      </button>
+    );
+  } else if (isError) {
     content =
-      likesData.totalCount === 1 ? (
-        <button
-          onClick={() => {
-            deleteLike(likesData.likes[0]._id);
-          }}
-          className='likeBtn likeBtn--red'
-        >
-          <FontAwesomeIcon icon={faHeartSolid} />
-        </button>
-      ) : (
+      error.status === 404 ? (
         <button
           onClick={() => {
             createLike({ postId });
@@ -46,9 +46,9 @@ export default function LikeBtn({ postId }) {
         >
           <FontAwesomeIcon icon={faHeartRegular} />
         </button>
+      ) : (
+        <p>{JSON.stringify(error)}</p>
       );
-  } else if (isError) {
-    content = <p>{JSON.stringify(error)}</p>;
   }
   return content;
 }

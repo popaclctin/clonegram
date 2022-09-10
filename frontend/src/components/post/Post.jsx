@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import {
-  useGetCommentsQuery,
+  useGetPostCommentsQuery,
   useGetPostLikesQuery,
 } from '../../store/apiSlice';
 import LoadingSpinner from '../ui/LoadingSpinner';
@@ -23,15 +23,15 @@ function Post({ post }) {
     isSuccess: isSuccessLikes,
     isError: isErrorLikes,
     error: errorLikes,
-  } = useGetPostLikesQuery({ postId: post._id });
-  console.log(post);
+  } = useGetPostLikesQuery(post._id);
+
   const {
     data: commentsData,
     isLoading: isLoadingComments,
     isSuccess: isSuccessComments,
     isError: isErrorComments,
     error: errorComments,
-  } = useGetCommentsQuery({ postId: post._id });
+  } = useGetPostCommentsQuery(post._id);
   const [showOptionsModal, setShowOptionsModal] = useState(false);
 
   let commentsContent;

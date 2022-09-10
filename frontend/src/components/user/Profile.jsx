@@ -1,44 +1,20 @@
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import {
-  useFollowUserMutation,
-  useGetPostsByUsernameQuery,
-} from '../../store/apiSlice';
-import PostExcerpt from '../post/PostExcerpt';
+
+import { useGetUserPostsQuery } from '../../store/apiSlice';
+
 import LoadingSpinner from '../ui/LoadingSpinner';
 
-function Profile() {
-  const { username } = useParams();
-  const { data, isLoading, isSuccess, isError, error } =
-    useGetPostsByUsernameQuery(username);
-  const [
-    followUser,
-    {
-      isLoading: isLoadingFollow,
-      error: errorFollow,
-      isError: isErrorFollow,
-      isSuccess: isSuccessFollow,
-    },
-  ] = useFollowUserMutation();
-
-  const followHandler = () => {
-    followUser(username);
-  };
-
-  useEffect(() => {
-    if (isSuccessFollow) {
-      alert('User followed');
-    }
-  }, []);
+function Profile({ user }) {
+  const { data, isLoading, isSuccess, isError, error } = useGetUserPostsQuery(
+    user._id
+  );
 
   let content;
 
   if (isLoading) {
     content = <LoadingSpinner />;
   } else if (isSuccess) {
-    content = data.posts.map((post) => (
-      <PostExcerpt key={post._id} post={post} />
-    ));
+    content = null;
   } else if (isError) {
     content = <div>{JSON.stringify(error)}</div>;
   }
@@ -46,7 +22,6 @@ function Profile() {
   return (
     <section>
       <h1>Profile</h1>
-      <button onClick={followHandler}>Follow</button>
       {content}
     </section>
   );

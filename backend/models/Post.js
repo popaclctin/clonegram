@@ -18,18 +18,6 @@ const postSchema = new Schema(
       name: String,
       path: String,
     },
-    likes: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'Like',
-      },
-    ],
-    comments: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'Comment',
-      },
-    ],
   },
   {
     timestamps: true,

@@ -3,12 +3,12 @@ const createHttpError = require('http-errors');
 
 const Comment = require('../models/Comment');
 
-module.exports.getAllComments = getAllComments;
+module.exports.getComments = getComments;
 module.exports.createComment = createComment;
 module.exports.updateComment = updateComment;
 module.exports.deleteComment = deleteComment;
 
-async function getAllComments(req, res, next) {
+async function getComments(req, res, next) {
   //check for validation errors
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -16,7 +16,8 @@ async function getAllComments(req, res, next) {
     return next(httpError);
   }
 
-  const { page = 1, limit = 15, postId } = req.query;
+  const { postId } = req.params;
+  const { page = 1, limit = 15 } = req.query;
 
   try {
     const comments = await Comment.find({

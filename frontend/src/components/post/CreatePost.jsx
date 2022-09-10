@@ -6,6 +6,7 @@ import useAuth from '../../hooks/useAuth';
 import './CreatePost.style.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
+import { toast } from 'react-toastify';
 
 function CreatePost({ onClose }) {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ function CreatePost({ onClose }) {
 
   useEffect(() => {
     if (isSuccess) {
+      toast.success('Post created');
       navigate(`/${auth.user.username}`, { replace: true });
     }
   }, [isSuccess]);

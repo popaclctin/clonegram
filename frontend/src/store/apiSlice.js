@@ -12,10 +12,10 @@ export const apiSlice = createApi({
       return headers;
     },
   }),
-  tagtypes: ['Post', 'Like', 'Comment'],
+  tagtypes: ['Post', 'Like', 'Comment', 'Follow'],
   endpoints: (build) => ({
-    getPostsByUsername: build.query({
-      query: (username) => ({ url: `${username}` }),
+    getUserPosts: build.query({
+      query: (userId) => ({ url: `user/${userId}/posts` }),
       providesTags: (result = { posts: [] }, error, arg) => [
         { type: 'Post', id: 'LIST' },
         ...result.posts.map(({ _id }) => ({ type: 'Post', id: _id })),
@@ -62,28 +62,43 @@ export const apiSlice = createApi({
         ...result.posts.map(({ _id }) => ({ type: 'Post', id: _id })),
       ],
     }),
-    followUser: build.mutation({
-      query: (username) => ({
-        url: `${username}/follow`,
-        method: 'POST',
+    getFollow: build.query({
+      query: ({ userId, followeeId }) => ({
+        url: `user/${userId}/follows`,
+        params: { followeeId },
       }),
-      invalidatesTags: [{ type: 'Post', id: 'LIST' }],
+      providesTags: ['Follow'],
     }),
-    unfollowUser: build.mutation({
-      query: (username) => ({
-        url: `${username}/follow`,
+    createFollow: build.mutation({
+      query: (body) => ({
+        url: 'follows',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: [{ type: 'Post', id: 'LIST' }, 'Follow'],
+    }),
+    deleteFollow: build.mutation({
+      query: (followId) => ({
+        url: `follows/${followId}`,
         method: 'DELETE',
       }),
-      invalidatesTags: [{ type: 'Post', id: 'LIST' }],
+      invalidatesTags: [{ type: 'Post', id: 'LIST' }, 'Follow'],
     }),
     searchUser: build.query({
       query: (searchTerm) => ({ url: `search`, params: { query: searchTerm } }),
     }),
     getPostLikes: build.query({
-      query: (params) => ({ url: `likes`, params }),
+      query: (postId) => ({ url: `posts/${postId}/likes` }),
       providesTags: ['Like'],
     }),
-    createPostLike: build.mutation({
+    getLike: build.query({
+      query: ({ userId, postId }) => ({
+        url: `user/${userId}/liked`,
+        params: { postId },
+      }),
+      providesTags: ['Like'],
+    }),
+    createLike: build.mutation({
       query: (body) => ({
         url: 'likes',
         method: 'POST',
@@ -98,8 +113,8 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ['Like'],
     }),
-    getComments: build.query({
-      query: (params) => ({ url: `comments`, params }),
+    getPostComments: build.query({
+      query: (postId) => ({ url: `posts/${postId}/comments` }),
       providesTags: ['Comment'],
     }),
     createComment: build.mutation({
@@ -113,23 +128,29 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ['Comment'],
     }),
+    getUserByUsername: build.query({
+      query: (username) => ({ url: `user/${username}` }),
+    }),
   }),
 });
 
 export const {
-  useGetPostsByUsernameQuery,
+  useGetUserPostsQuery,
   useGetPostByIdQuery,
   useCreatePostMutation,
   useEditPostMutation,
   useDeletePostMutation,
   useGetFeedQuery,
-  useFollowUserMutation,
-  useUnfollowUserMutation,
+  useCreateFollowMutation,
+  useDeleteFollowMutation,
   useSearchUserQuery,
   useGetPostLikesQuery,
-  useCreatePostLikeMutation,
+  useCreateLikeMutation,
   useDeleteLikeMutation,
-  useGetCommentsQuery,
+  useGetPostCommentsQuery,
   useCreateCommentMutation,
   useDeleteCommentMutation,
+  useGetUserByUsernameQuery,
+  useGetLikeQuery,
+  useGetFollowQuery,
 } = apiSlice;

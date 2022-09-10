@@ -7,11 +7,6 @@ const commentController = require('../controllers/comment.controller');
 
 router.use(authorizeMiddleware);
 
-router.get(
-  '/',
-  query('postId').customSanitizer(sanitizeId),
-  commentController.getAllComments
-);
 router.post('/', commentController.createComment);
 router.delete('/:commentId', commentController.deleteComment);
 

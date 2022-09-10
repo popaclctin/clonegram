@@ -7,17 +7,7 @@ const likeController = require('../controllers/like.controller');
 
 router.use(authorizeMiddleware);
 
-router.get('/', query('postId').notEmpty(), likeController.getAllLikes);
+router.post('/', likeController.createLike);
 
-router.post(
-  '/',
-  body('postId').notEmpty().customSanitizer(sanitizeId),
-  likeController.createPostLike
-);
-
-router.delete(
-  '/:likeId',
-  param('likeId').notEmpty().customSanitizer(sanitizeId),
-  likeController.deleteLike
-);
+router.delete('/:likeId', likeController.deleteLike);
 module.exports = router;

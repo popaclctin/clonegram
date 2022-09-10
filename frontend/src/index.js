@@ -10,7 +10,7 @@ import HomePage from './components/pages/HomePage';
 import CreatePost from './components/post/CreatePost';
 import PostPage from './components/pages/PostPage';
 import './styles/style.scss';
-import Profile from './components/user/Profile';
+import UserPage from './components/pages/UserPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -24,7 +24,7 @@ root.render(
             <Route path=':postId' element={<PostPage />} />
             <Route path='create' element={<CreatePost />} />
           </Route>
-          <Route path=':username' element={<Profile />} />
+          <Route path=':username' element={<UserPage />} />
         </Route>
         <Route path='/login' element={<LoginPage />} />
         <Route path='/signup' element={<SignupPage />} />

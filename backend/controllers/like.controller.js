@@ -3,11 +3,12 @@ const createHttpError = require('http-errors');
 
 const Like = require('../models/Like');
 
-module.exports.getAllLikes = getAllLikes;
-module.exports.createPostLike = createPostLike;
+module.exports.getLikes = getLikes;
+module.exports.getLike = getLike;
+module.exports.createLike = createLike;
 module.exports.deleteLike = deleteLike;
 
-async function getAllLikes(req, res, next) {
+async function getLikes(req, res, next) {
   //check for validation errors
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -15,18 +16,18 @@ async function getAllLikes(req, res, next) {
     return next(httpError);
   }
 
-  const { postId, userId, page = 1, limit = 20 } = req.query;
-
-  const queryArgs = userId ? { post: postId, user: userId } : { post: postId };
+  const { postId } = req.params;
+  const { page = 1, limit = 20 } = req.query;
 
   try {
-    const likes = await Like.find(queryArgs)
+    const likes = await Like.find({ post: postId })
       .sort({ createdAt: -1 })
       .limit(limit)
       .skip((page - 1) * limit)
       .exec();
 
-    const count = await Like.countDocuments(queryArgs).exec();
+    const count = await Like.countDocuments({ post: postId }).exec();
+
     res.status(200).json({
       likes,
       totalCount: count,
@@ -38,7 +39,34 @@ async function getAllLikes(req, res, next) {
   }
 }
 
-async function createPostLike(req, res, next) {
+async function getLike(req, res, next) {
+  //check for validation errors
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const httpError = createHttpError(400, { invalidParams: errors.array() });
+    return next(httpError);
+  }
+
+  const { userId } = req.params;
+  const { postId } = req.query;
+
+  try {
+    const like = await Like.findOne({ post: postId, user: userId }).exec();
+
+    if (!like) {
+      const httpError = createHttpError(404, 'Like not found');
+      return next(httpError);
+    }
+
+    res.status(200).json({
+      like,
+    });
+  } catch (err) {
+    return next(createHttpError(500, err));
+  }
+}
+
+async function createLike(req, res, next) {
   //check for validation errors
   const errors = validationResult(req);
   if (!errors.isEmpty()) {

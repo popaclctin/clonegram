@@ -14,16 +14,16 @@ async function getFeed(req, res, next) {
     return next(httpError);
   }
 
+  const userId = req.user._id;
   const { page = 1, limit = 10 } = req.query;
 
   try {
     const user = await User.findById(req.user._id).exec();
 
     const feedPosts = await Post.find({
-      user: { $in: user.following },
+      $or: [{ user: { $in: user.following } }, { user: userId }],
     })
       .populate({ path: 'user', select: 'username' })
-      .populate('comments')
       .sort({ createdAt: -1 })
       .limit(limit)
       .skip((page - 1) * limit)
