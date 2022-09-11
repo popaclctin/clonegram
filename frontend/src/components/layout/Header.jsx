@@ -10,11 +10,13 @@ import SearchInput from './SearchInput';
 function Header() {
   return (
     <header className='header'>
-      <div className='header__logo'>
-        <Link to='/'>Clonegram</Link>
+      <div className='header__content'>
+        <div className='header__logo'>
+          <Link to='/'>Clonegram</Link>
+        </div>
+        <SearchInput />
+        <Navbar />
       </div>
-      <SearchInput />
-      <Navbar />
     </header>
   );
 }

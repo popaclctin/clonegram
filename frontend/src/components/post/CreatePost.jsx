@@ -50,7 +50,11 @@ function CreatePost({ onClose }) {
         >
           <div className='createPost__header'>
             <p className='createPost__title'>Create new post</p>
-            <button type='submit' className='createPost__submitBtn'>
+            <button
+              type='submit'
+              className='createPost__submitBtn'
+              disabled={!(props.dirty && props.isValid)}
+            >
               Share
             </button>
           </div>

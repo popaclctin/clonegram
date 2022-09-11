@@ -39,7 +39,7 @@ export const apiSlice = createApi({
       query: (options) => ({
         url: `posts/${options.postId}`,
         method: 'PATCH',
-        body: options.body,
+        body: { caption: options.caption },
       }),
       invalidatesTags: (result, error, arg) => [
         { type: 'Post', id: arg.postId },

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   useDeletePostMutation,
@@ -10,12 +10,20 @@ import useAuth from '../../hooks/useAuth';
 import { toast } from 'react-toastify';
 import './PostOptionsModal.style.scss';
 import LoadingSpinner from '../ui/LoadingSpinner';
-//TODO: refactor to make options reusable (ex: for User options modal)
+import EditPost from './EditPost';
+
 export default function PostOptionsModal({ post, onClose }) {
   const auth = useAuth();
+  const [showEditPostModal, setShowEditPostModal] = useState(false);
   const isUserAuth = post.user._id === auth.user.id;
 
-  const { data, isSuccess, isLoading, isError, error } = useGetFollowQuery(
+  const {
+    data: followData,
+    isSuccess,
+    isLoading,
+    isError,
+    error,
+  } = useGetFollowQuery(
     {
       userId: auth.user.id,
       followeeId: post.user._id,
@@ -46,12 +54,18 @@ export default function PostOptionsModal({ post, onClose }) {
             </button>
           </li>
           <li className='options__option'>
-            <button onClick={() => toast.success('Post edited')}>Edit</button>
+            <button onClick={() => setShowEditPostModal(true)}>Edit</button>
           </li>
           <li className='options__option'>
             <button onClick={onClose}>Cancel</button>
           </li>
         </ul>
+        {showEditPostModal && (
+          <EditPostModal
+            onClose={() => setShowEditPostModal(false)}
+            post={post}
+          />
+        )}
       </Modal>
     );
   } else {
@@ -64,7 +78,7 @@ export default function PostOptionsModal({ post, onClose }) {
             <li className='options__option options__option--red'>
               <button
                 onClick={() => {
-                  unfollowUser(post.user.username);
+                  deleteFollow(followData.follow._id);
                 }}
               >
                 Unfollow
@@ -113,3 +127,11 @@ export default function PostOptionsModal({ post, onClose }) {
 
   return content;
 }
+
+const EditPostModal = ({ onClose, post }) => {
+  return (
+    <Modal onClose={onClose}>
+      <EditPost onClose={onClose} post={post} />
+    </Modal>
+  );
+};
