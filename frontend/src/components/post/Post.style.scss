@@ -27,7 +27,8 @@
   &__header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    // justify-content: space-between;
+    column-gap: 1rem;
     padding: $padding;
     border-bottom: 1px solid variables.$lightGrey;
   }
@@ -52,6 +53,7 @@
   }
 
   &__optionsBtn {
+    margin-left: auto;
     border: 0;
     background-color: transparent;
     &:hover {

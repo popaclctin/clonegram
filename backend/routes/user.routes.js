@@ -13,7 +13,7 @@ router.use(authorizeMiddleware);
 
 router.get('/:username', userController.getUserByUsername);
 router.get('/:userId/followers', followController.getFollowers);
-router.get('/:userId/followees', followController.getFollowees);
+router.get('/:userId/following', followController.getFollowing);
 router.get('/:userId/follows', followController.getFollow);
 router.get('/:userId/liked', likeController.getLike);
 router.get('/:userId/posts', postController.getPosts);

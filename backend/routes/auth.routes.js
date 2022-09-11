@@ -53,8 +53,8 @@ router.post(
       }
       return true;
     }),
-  body('firstname').notEmpty().trim(),
-  body('lastname').notEmpty().trim(),
+  body('firstName').notEmpty().trim(),
+  body('lastName').notEmpty().trim(),
   authController.signup
 );
 

@@ -1,0 +1,32 @@
+@use '../../styles/variables';
+
+.followBtn {
+  border: 1px solid variables.$lightGrey;
+  border-radius: 5px;
+
+  &__isFollowing {
+    padding: 0.25rem 1rem;
+    border: 0;
+    background-color: transparent;
+    &:hover {
+      cursor: pointer;
+    }
+    &:active {
+      opacity: 0.5;
+    }
+  }
+
+  &__notFollowing {
+    padding: 0.25rem 1rem;
+    border: 0;
+    font-weight: bold;
+    color: white;
+    background-color: variables.$blue;
+    &:hover {
+      cursor: pointer;
+    }
+    &:active {
+      opacity: 0.5;
+    }
+  }
+}

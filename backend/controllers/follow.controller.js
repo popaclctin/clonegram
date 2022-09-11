@@ -3,7 +3,7 @@ const createHttpError = require('http-errors');
 const Follow = require('../models/Follow');
 
 module.exports.getFollowers = getFollowers;
-module.exports.getFollowees = getFollowees;
+module.exports.getFollowing = getFollowing;
 module.exports.getFollow = getFollow;
 module.exports.createFollow = createFollow;
 module.exports.deleteFollow = deleteFollow;
@@ -40,7 +40,7 @@ async function getFollowers(req, res, next) {
   }
 }
 
-async function getFollowees(req, res, next) {
+async function getFollowing(req, res, next) {
   //check for validation errors
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -52,19 +52,19 @@ async function getFollowees(req, res, next) {
   const { page = 1, limit = 20 } = req.query;
 
   try {
-    const followees = await Follow.find({ follower: userId })
+    const following = await Follow.find({ follower: userId })
       .limit(limit)
       .skip((page - 1) * limit)
       .exec();
 
-    const followeesCount = await Follow.countDocuments({
+    const followingCount = await Follow.countDocuments({
       follower: userId,
     }).exec();
 
     return res.status(200).json({
-      followers: followees,
-      totalCount: followeesCount,
-      totalPages: Math.ceil(followeesCount / limit),
+      following: following,
+      totalCount: followingCount,
+      totalPages: Math.ceil(followingCount / limit),
       currentPage: page,
     });
   } catch (err) {

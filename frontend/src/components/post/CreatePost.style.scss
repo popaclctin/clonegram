@@ -1,8 +1,6 @@
 @use '../../styles/variables';
 
 .createPost {
-  // min-height: 50vh;
-
   width: 50vw;
   overflow: auto;
   display: flex;
@@ -64,6 +62,11 @@
 
     &__inputFile {
       display: none;
+    }
+
+    img {
+      // width: 100%;
+      max-height: 80vh;
     }
   }
 

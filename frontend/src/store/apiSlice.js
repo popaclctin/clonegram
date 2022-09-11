@@ -69,6 +69,18 @@ export const apiSlice = createApi({
       }),
       providesTags: ['Follow'],
     }),
+    getFollowers: build.query({
+      query: (userId) => ({
+        url: `user/${userId}/followers`,
+      }),
+      providesTags: ['Follow'],
+    }),
+    getFollowing: build.query({
+      query: (userId) => ({
+        url: `user/${userId}/following`,
+      }),
+      providesTags: ['Follow'],
+    }),
     createFollow: build.mutation({
       query: (body) => ({
         url: 'follows',
@@ -153,4 +165,6 @@ export const {
   useGetUserByUsernameQuery,
   useGetLikeQuery,
   useGetFollowQuery,
+  useGetFollowersQuery,
+  useGetFollowingQuery,
 } = apiSlice;

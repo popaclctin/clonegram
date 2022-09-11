@@ -8,10 +8,10 @@ import {
 import Modal from '../ui/Modal';
 import useAuth from '../../hooks/useAuth';
 import { toast } from 'react-toastify';
-import './OptionsModal.style.scss';
+import './PostOptionsModal.style.scss';
 import LoadingSpinner from '../ui/LoadingSpinner';
-
-export default function OptionsModal({ post, onClose }) {
+//TODO: refactor to make options reusable (ex: for User options modal)
+export default function PostOptionsModal({ post, onClose }) {
   const auth = useAuth();
   const isUserAuth = post.user._id === auth.user.id;
 

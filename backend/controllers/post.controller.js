@@ -1,7 +1,9 @@
 const { validationResult } = require('express-validator');
 const createHttpError = require('http-errors');
+const ObjectId = require('mongoose').Types.ObjectId;
 
 const Post = require('../models/Post');
+const Like = require('../models/Like');
 
 module.exports.getPosts = getPosts;
 module.exports.createPost = createPost;
@@ -21,11 +23,57 @@ async function getPosts(req, res, next) {
   const { page = 1, limit = 20 } = req.query;
 
   try {
-    const posts = await Post.find({ user: userId })
-      .sort({ createdAt: -1 })
-      .limit(limit)
-      .skip((page - 1) * limit)
-      .exec();
+    // const posts = await Post.find({ user: userId })
+    //   .sort({ createdAt: -1 })
+    //   .limit(limit)
+    //   .skip((page - 1) * limit)
+    //   .exec();
+
+    const posts = await Post.aggregate([
+      {
+        $match: {
+          user: ObjectId(userId),
+        },
+      },
+      {
+        $lookup: {
+          from: 'likes',
+          localField: '_id',
+          foreignField: 'post',
+          as: 'likes',
+        },
+      },
+      {
+        $lookup: {
+          from: 'comments',
+          localField: '_id',
+          foreignField: 'post',
+          as: 'comments',
+        },
+      },
+      {
+        $addFields: {
+          commentsCount: {
+            $size: '$comments',
+          },
+          likesCount: {
+            $size: '$likes',
+          },
+        },
+      },
+      {
+        $unset: ['comments', 'likes'],
+      },
+      {
+        $sort: { createdAt: -1 },
+      },
+      {
+        $skip: (page - 1) * limit,
+      },
+      {
+        $limit: limit,
+      },
+    ]);
 
     const postsCount = await Post.countDocuments({ user: userId }).exec();
 

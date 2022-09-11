@@ -6,13 +6,14 @@ import {
 import LoadingSpinner from '../ui/LoadingSpinner';
 import { API_URL } from '../../config/config';
 import { Link } from 'react-router-dom';
-import OptionsModal from './OptionsModal';
+import OptionsModal from './PostOptionsModal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleUser, faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import { formatDistanceToNowStrict, formatDistanceToNow } from 'date-fns';
 import LikeBtn from './LikeBtn';
 import CommentInput from './CommentInput';
 import './Post.style.scss';
+import FollowBtn from './FollowBtn';
 
 //TODO: implement edit
 
@@ -82,6 +83,7 @@ function Post({ post }) {
               />
               <p className='post__author__username'>{post.user.username}</p>
             </Link>
+            <FollowBtn userId={post.user._id} />
             <button
               onClick={() => setShowOptionsModal(true)}
               className='post__optionsBtn'

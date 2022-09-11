@@ -18,7 +18,7 @@ import {
 } from '../../store/apiSlice';
 
 import './PostExcerpt.style.scss';
-import OptionsModal from './OptionsModal';
+import PostOptionsModal from './PostOptionsModal';
 import CommentInput from './CommentInput';
 import LikeBtn from './LikeBtn';
 
@@ -33,7 +33,10 @@ function PostExcerpt({ post }) {
   return (
     <Fragment>
       {showOptionsModal && (
-        <OptionsModal onClose={() => setShowOptionsModal(false)} post={post} />
+        <PostOptionsModal
+          onClose={() => setShowOptionsModal(false)}
+          post={post}
+        />
       )}
       <article key={post.key} className='postExcerpt'>
         <div className='postExcerpt__header'>

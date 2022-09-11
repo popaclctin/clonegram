@@ -57,13 +57,13 @@ function SignupForm() {
     }
 
     //Validate first name
-    if (!values.firstname) {
-      errors.firstname = 'First name is required';
+    if (!values.firstName) {
+      errors.firstName = 'First name is required';
     }
 
     //Validate last name
-    if (!values.lastname) {
-      errors.lastname = 'Last name is required';
+    if (!values.lastName) {
+      errors.lastName = 'Last name is required';
     }
 
     return errors;
@@ -75,8 +75,8 @@ function SignupForm() {
       username: '',
       password: '',
       passwordConfirmation: '',
-      firstname: '',
-      lastname: '',
+      firstName: '',
+      lastName: '',
     },
     validate,
     onSubmit: (values, { setSubmitting }) => {
@@ -85,8 +85,8 @@ function SignupForm() {
         username: values.username,
         password: values.password,
         passwordConfirmation: values.passwordConfirmation,
-        firstname: values.firstname,
-        lastname: values.lastname,
+        firstName: values.firstName,
+        lastName: values.lastName,
       });
       setSubmitting(false);
     },
@@ -142,22 +142,22 @@ function SignupForm() {
 
         <input
           type='text'
-          id='firstname'
-          name='firstname'
+          id='firstName'
+          name='firstName'
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          value={formik.values.firstname}
+          value={formik.values.firstName}
           placeholder='First name'
           className='authForm__field'
         />
 
         <input
           type='text'
-          id='lastname'
-          name='lastname'
+          id='lastName'
+          name='lastName'
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          value={formik.values.lastname}
+          value={formik.values.lastName}
           placeholder='Last name'
           className='authForm__field'
         />
@@ -185,11 +185,11 @@ function SignupForm() {
             {formik.errors.passwordConfirmation}
           </p>
         ) : null}
-        {formik.touched.firstname && formik.errors.firstname ? (
-          <p className='authForm__error'>{formik.errors.firstname}</p>
+        {formik.touched.firstName && formik.errors.firstName ? (
+          <p className='authForm__error'>{formik.errors.firstName}</p>
         ) : null}
-        {formik.touched.lastname && formik.errors.lastname ? (
-          <p className='authForm__error'>{formik.errors.lastname}</p>
+        {formik.touched.lastName && formik.errors.lastName ? (
+          <p className='authForm__error'>{formik.errors.lastName}</p>
         ) : null}
       </form>
     </section>

@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useCreatePostMutation } from '../../store/apiSlice';
-import { useNavigate } from 'react-router-dom';
 import { Field, Formik } from 'formik';
 import useAuth from '../../hooks/useAuth';
 import './CreatePost.style.scss';
@@ -9,7 +8,6 @@ import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 
 function CreatePost({ onClose }) {
-  const navigate = useNavigate();
   const auth = useAuth();
   const [createPost, { isLoading, error, isError, isSuccess }] =
     useCreatePostMutation();
@@ -17,7 +15,7 @@ function CreatePost({ onClose }) {
   useEffect(() => {
     if (isSuccess) {
       toast.success('Post created');
-      navigate(`/${auth.user.username}`, { replace: true });
+      onClose();
     }
   }, [isSuccess]);
 
@@ -42,7 +40,6 @@ function CreatePost({ onClose }) {
         }
         createPost(formData);
         actions.setSubmitting(false);
-        onClose();
       }}
     >
       {(props) => (
