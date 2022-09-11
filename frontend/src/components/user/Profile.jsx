@@ -4,6 +4,7 @@ import { useGetUserPostsQuery } from '../../store/apiSlice';
 
 import LoadingSpinner from '../ui/LoadingSpinner';
 import UserInfo from './UserInfo';
+import PostsGrid from '../post/PostsGrid';
 
 function Profile({ user }) {
   const { data, isLoading, isSuccess, isError, error } = useGetUserPostsQuery(
@@ -18,6 +19,7 @@ function Profile({ user }) {
     content = (
       <Fragment>
         <UserInfo user={user} />
+        <PostsGrid posts={data.posts} />
       </Fragment>
     );
   } else if (isError) {

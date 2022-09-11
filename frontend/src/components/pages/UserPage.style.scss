@@ -1,5 +1,6 @@
 @use '../../styles/variables';
 
 .userPage {
-  margin: variables.$pageMargin;
+  max-width: 55rem;
+  margin: 0 auto;
 }
