@@ -1,6 +1,10 @@
-import { render, screen } from '@testing-library/react';
+import React from 'react';
+import { render, cleanup } from '@testing-library/react';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
 
-it('renders LoadingSpinner', () => {
-  render(<LoadingSpinner />);
+afterEach(cleanup);
+
+it('should take a snapshot', () => {
+  const { asFragment } = render(<LoadingSpinner />);
+  expect(asFragment(<LoadingSpinner />)).toMatchSnapshot();
 });

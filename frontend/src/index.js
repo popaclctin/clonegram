@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import store from './store/store';
+import store from './store';
 import { Provider } from 'react-redux';
 import LoginPage from './components/pages/LoginPage';
 import SignupPage from './components/pages/SignupPage';

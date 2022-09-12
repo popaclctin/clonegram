@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should take a snapshot 1`] = `
+<DocumentFragment>
+  <section
+    class="authForm"
+  >
+    <h1
+      class="authForm__title"
+    >
+      Clonegram
+    </h1>
+    <form>
+      <input
+        class="authForm__field"
+        id="email"
+        name="email"
+        placeholder="Email"
+        type="email"
+        value="bula@gmail.com"
+      />
+      <input
+        class="authForm__field"
+        id="password"
+        name="password"
+        placeholder="Password"
+        type="password"
+        value="parola"
+      />
+      <button
+        class="authForm__submitBtn"
+        type="submit"
+      >
+        Log In
+      </button>
+    </form>
+    <a
+      class="authForm__forgotPass"
+      href="#"
+    >
+      Forgotten your password?
+    </a>
+  </section>
+</DocumentFragment>
+`;
