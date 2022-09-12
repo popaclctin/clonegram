@@ -20,6 +20,7 @@ async function getFeed(req, res, next) {
   try {
     const user = await User.findById(req.user._id).exec();
 
+    //FIXME: find the user's followers
     const feedPosts = await Post.find({
       $or: [{ user: { $in: user.following } }, { user: userId }],
     })

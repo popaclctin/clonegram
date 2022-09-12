@@ -1,8 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
 //for production must add configs
-const port = process.env.PORT || 3000;
 
 module.exports = {
   entry: './src/index.js',
@@ -10,19 +8,14 @@ module.exports = {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'build'),
     assetModuleFilename: 'assets/[name][ext]',
-    publicPath: '/',
+    // publicPath: '/',
   },
-  devtool: 'inline-source-map',
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'public', 'index.html'),
       favicon: path.join(__dirname, 'public', 'favicon.ico'),
     }),
   ],
-  devServer: {
-    port,
-    historyApiFallback: true,
-  },
   module: {
     rules: [
       {
