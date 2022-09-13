@@ -7,12 +7,6 @@ const rootReducer = combineReducers({
   [apiSlice.reducerPath]: apiSlice.reducer,
 });
 
-const store = configureStore({
-  reducer: rootReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(apiSlice.middleware),
-});
-
 export const setupStore = (preloadedState) => {
   return configureStore({
     reducer: rootReducer,
@@ -22,4 +16,6 @@ export const setupStore = (preloadedState) => {
   });
 };
 
-export default store;
+// const store = setupStore({});
+
+// export default store;

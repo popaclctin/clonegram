@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should take a snapshot 1`] = `
+exports[`<LoadingSpinner /> renders correctly 1`] = `
 <DocumentFragment>
   <svg
     aria-hidden="true"

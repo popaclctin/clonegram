@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should take a snapshot 1`] = `
+exports[`<LoginForm /> renders correctly 1`] = `
 <DocumentFragment>
   <section
     class="authForm"

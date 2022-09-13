@@ -4,6 +4,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useFormik } from 'formik';
 import './AuthForm.style.scss';
 
+let errorMessage;
+
 function LoginForm() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -17,16 +19,19 @@ function LoginForm() {
         ? navigate(ref.pathname, { replace: true })
         : navigate('/', { replace: true });
     }
-  });
+  }, [isSuccess]);
 
-  let errorMessage;
   if (isError) {
-    if (error.data.message === 'VALIDATION_ERROR') {
-      errorMessage = error.data.invalidParams.map((param, index) => (
-        <p key={index}>{param.message}</p>
-      ));
+    if (error.data?.message === 'VALIDATION_ERROR') {
+      errorMessage = (
+        <ul>
+          {error.data.invalidParams.map((param, index) => (
+            <li key={index}>{param.message}</li>
+          ))}
+        </ul>
+      );
     } else {
-      errorMessage = <p>{error.data.message}</p>;
+      errorMessage = error.data?.message;
     }
   }
 

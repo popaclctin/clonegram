@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SignupForm /> renders correctly 1`] = `
+<DocumentFragment>
+  <section
+    class="authForm"
+  >
+    <h1
+      class="authForm__title"
+    >
+      Clonegram
+    </h1>
+    <form>
+      <input
+        class="authForm__field"
+        id="email"
+        name="email"
+        placeholder="Email"
+        type="email"
+        value=""
+      />
+      <input
+        class="authForm__field"
+        id="username"
+        name="username"
+        placeholder="Username"
+        type="text"
+        value=""
+      />
+      <input
+        class="authForm__field"
+        id="password"
+        name="password"
+        placeholder="Password"
+        type="password"
+        value=""
+      />
+      <input
+        class="authForm__field"
+        id="passwordConfirmation"
+        name="passwordConfirmation"
+        placeholder="Confirm password"
+        type="password"
+        value=""
+      />
+      <input
+        class="authForm__field"
+        id="firstName"
+        name="firstName"
+        placeholder="First name"
+        type="text"
+        value=""
+      />
+      <input
+        class="authForm__field"
+        id="lastName"
+        name="lastName"
+        placeholder="Last name"
+        type="text"
+        value=""
+      />
+      <button
+        class="authForm__submitBtn"
+        disabled=""
+        type="submit"
+      >
+        Signup
+      </button>
+    </form>
+  </section>
+</DocumentFragment>
+`;

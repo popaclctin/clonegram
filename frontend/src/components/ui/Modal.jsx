@@ -12,14 +12,11 @@ const ModalOverlay = (props) => {
   return <div className='modal'>{props.children}</div>;
 };
 
-function Modal(props) {
+function Modal({ children, onClose, root = portalElement }) {
   return (
     <Fragment>
-      {createPortal(<Backdrop onClose={props.onClose} />, portalElement)}
-      {createPortal(
-        <ModalOverlay>{props.children}</ModalOverlay>,
-        portalElement
-      )}
+      {createPortal(<Backdrop onClose={onClose} />, root)}
+      {createPortal(<ModalOverlay>{children}</ModalOverlay>, root)}
     </Fragment>
   );
 }

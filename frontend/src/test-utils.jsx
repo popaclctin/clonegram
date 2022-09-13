@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { setupStore } from './store';
+import { setupListeners } from '@reduxjs/toolkit/dist/query';
 
 import { BrowserRouter } from 'react-router-dom';
 
@@ -14,6 +15,8 @@ export function renderWithProviders(
     ...renderOptions
   } = {}
 ) {
+  setupListeners(store.dispatch);
+
   function Wrapper({ children }) {
     return (
       <Provider store={store}>
