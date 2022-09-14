@@ -1,9 +1,21 @@
+@use '../../styles/mixins' as m;
+
 .postsList {
   max-width: 30rem;
   margin: 0 auto;
+
   &__list {
     display: flex;
     flex-direction: column;
     row-gap: 1rem;
+  }
+
+  &__nocontent {
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  @include m.breakpoint-up(desktop) {
+    margin: 0;
   }
 }

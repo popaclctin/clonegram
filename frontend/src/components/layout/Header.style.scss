@@ -1,11 +1,11 @@
-@use '../../styles/variables';
+@use '../../styles/variables' as v;
 @use '../../styles/mixins' as m;
 
 .header {
   padding: 0 1rem;
   position: sticky;
   top: 0;
-  border-bottom: 1px solid variables.$lightGrey;
+  border-bottom: 1px solid v.$lightGrey;
   background-color: white;
   z-index: 10;
 
@@ -19,7 +19,7 @@
   }
 
   &__logo {
-    font-family: variables.$logoFontFamily;
+    font-family: v.$logoFontFamily;
     font-size: 2rem;
     font-weight: bold;
     a {

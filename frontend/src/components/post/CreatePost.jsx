@@ -49,6 +49,13 @@ function CreatePost({ onClose }) {
           className='createPost'
         >
           <div className='createPost__header'>
+            <button
+              type='text'
+              className='createPost__cancelBtn'
+              onClick={onClose}
+            >
+              Cancel
+            </button>
             <p className='createPost__title'>Create new post</p>
             <button
               type='submit'
@@ -60,10 +67,14 @@ function CreatePost({ onClose }) {
           </div>
           <div className='createPost__body'>
             <Field name='image' component={CustomInputFile} />
-            <div className='createPost__caption'>
-              <div className='createPost__caption__username'>
-                <FontAwesomeIcon icon={faCircleUser} size='xl' />
-                <p>{auth.user.username}</p>
+            <div className='createPost__fields'>
+              <div className='createPost__user'>
+                <FontAwesomeIcon
+                  icon={faCircleUser}
+                  size='xl'
+                  className='createPost__userLogo'
+                />
+                <p className='createPost__username'>{auth.user.username}</p>
               </div>
               <textarea
                 name='caption'
@@ -71,7 +82,7 @@ function CreatePost({ onClose }) {
                 onBlur={props.handleBlur}
                 value={props.values.caption}
                 placeholder='Write a caption...'
-                className='createPost__caption__textarea'
+                className='createPost__caption'
                 maxLength={2200}
               ></textarea>
               {props.touched.caption && props.errors.caption ? (

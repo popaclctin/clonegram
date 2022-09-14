@@ -39,6 +39,7 @@ export default function CommentInput({ postId }) {
             value={props.values.comment}
             placeholder='Add a comment...'
             className='commentInput__inputText'
+            autoComplete='off'
           />
           <button
             type='submit'

@@ -1,11 +1,11 @@
-@use '../../styles/variables';
-@use '../../styles/mixins';
+@use '../../styles/variables' as v;
+@use '../../styles/mixins' as m;
 
 .postExcerpt {
   $padding: 0.75rem;
 
   font-size: 0.9rem;
-  border: 1px solid variables.$lightGrey;
+  border: 1px solid v.$lightGrey;
   border-radius: 10px;
   background-color: white;
 
@@ -18,15 +18,21 @@
 
   &__author {
     display: flex;
+    align-items: center;
     column-gap: 0.5rem;
     text-decoration: none;
-    color: inherit;
+
     &__icon {
-      color: variables.$grey;
+      font-size: 2rem;
+      color: v.$lightGrey;
     }
 
     &__username {
-      font-weight: bold;
+      font-weight: 600;
+    }
+
+    &:visited {
+      color: black;
     }
   }
 
@@ -85,13 +91,9 @@
 
   &__comments {
     a {
-      color: variables.$grey;
-      text-decoration: none;
+      color: v.$grey;
       &:visited {
-        color: variables.$grey;
-      }
-      &:active {
-        opacity: 0.5;
+        color: v.$grey;
       }
     }
   }
@@ -99,15 +101,10 @@
   &__timeDistance {
     font-size: 0.625rem;
     text-transform: uppercase;
-
     a {
-      text-decoration: none;
-      color: variables.$grey;
+      color: v.$grey;
       &:visited {
-        color: variables.$grey;
-      }
-      &:active {
-        opacity: 0.5;
+        color: v.$grey;
       }
     }
   }
@@ -115,9 +112,10 @@
   &__commentInput {
     margin-top: auto;
     padding: $padding;
-    border-top: 1px solid variables.$lightGrey;
+    border-top: 1px solid v.$lightGrey;
   }
 
-  @include mixins.breakpoint-up(desktop) {
+  a:active {
+    opacity: 0.5;
   }
 }

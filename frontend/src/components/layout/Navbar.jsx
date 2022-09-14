@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faHouse,
@@ -22,9 +22,9 @@ function Navbar() {
     <nav className='header__nav'>
       <ul>
         <li>
-          <NavLink to='/'>
+          <Link to='/'>
             <FontAwesomeIcon icon={faHouse} size='xl' />
-          </NavLink>
+          </Link>
         </li>
         <li>
           <button

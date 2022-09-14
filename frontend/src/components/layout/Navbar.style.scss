@@ -1,4 +1,4 @@
-@use '../../styles/variables';
+@use '../../styles/variables' as v;
 
 .header__nav {
   position: relative;
@@ -61,7 +61,7 @@
 
         &:hover {
           cursor: pointer;
-          background-color: variables.$lightGrey;
+          background-color: v.$lightGrey;
         }
       }
     }

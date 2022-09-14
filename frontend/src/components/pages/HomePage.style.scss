@@ -2,9 +2,15 @@
 
 .homePage {
   margin-top: 2rem;
+  margin-left: auto;
+  margin-right: auto;
 
   .authUser {
     display: none;
+  }
+
+  &__emptyFeed {
+    text-align: center;
   }
 
   @include m.breakpoint-up(desktop) {

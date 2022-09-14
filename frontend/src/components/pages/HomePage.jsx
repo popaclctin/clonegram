@@ -17,7 +17,11 @@ function HomePage() {
   } else if (isSuccess) {
     content = (
       <Fragment>
-        <PostsList posts={data.posts} />
+        {data.posts.length !== 0 ? (
+          <PostsList posts={data.posts} />
+        ) : (
+          <p className='homePage__emptyFeed'>Your posts feed is empty</p>
+        )}
         <section>
           <AuthUser />
           <Footer />

@@ -70,17 +70,20 @@ function PostExcerpt({ post }) {
           <div className='postExcerpt__likes'>
             {isSuccessGetPostLikes && likesData.totalCount} likes
           </div>
-          <div className='postExcerpt__caption'>
-            <p>
-              <Link
-                to={`/${post.user.username}`}
-                className='postExcerpt__username'
-              >
-                {post.user.username}
-              </Link>{' '}
-              {post.caption}
-            </p>
-          </div>
+          {post.caption && (
+            <div className='postExcerpt__caption'>
+              <p>
+                <Link
+                  to={`/${post.user.username}`}
+                  className='postExcerpt__username'
+                >
+                  {post.user.username}
+                </Link>{' '}
+                {post.caption}
+              </p>
+            </div>
+          )}
+
           <div className='postExcerpt__comments'>
             {isSuccessGetComments &&
               (commentsData.totalCount > 0 ? (

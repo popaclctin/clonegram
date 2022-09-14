@@ -1,14 +1,15 @@
-@use '../../styles/variables';
+@use '../../styles/variables' as v;
+@use '../../styles/mixins' as m;
 
 .options {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 30vw;
+  min-width: 16.25rem;
   &__option {
     width: 100%;
     font-size: 0.875rem;
-    border-top: 1px solid variables.$lightGrey;
+    border-top: 1px solid v.$lightGrey;
     &:first-child {
       border-top: none;
     }
@@ -23,13 +24,17 @@
         cursor: pointer;
       }
       &:active {
-        background-color: variables.$lightGrey;
+        background-color: v.$lightGrey;
       }
     }
 
     &--red {
-      color: variables.$red;
+      color: v.$red;
       font-weight: bold;
     }
+  }
+
+  @include m.breakpoint-up(desktop) {
+    min-width: 27rem;
   }
 }

@@ -62,10 +62,14 @@ function EditPost({ onClose, post }) {
             <div className='editPost__image'>
               <img src={`${API_URL}/uploads/${post.image.name}`} />
             </div>
-            <div className='editPost__caption'>
-              <div className='editPost__caption__username'>
-                <FontAwesomeIcon icon={faCircleUser} size='xl' />
-                <p>{auth.user.username}</p>
+            <div className='editPost__fields'>
+              <div className='editPost__user'>
+                <FontAwesomeIcon
+                  icon={faCircleUser}
+                  size='xl'
+                  className='editPost__userLogo'
+                />
+                <p className='editPost__username'>{auth.user.username}</p>
               </div>
               <textarea
                 name='caption'
@@ -73,7 +77,7 @@ function EditPost({ onClose, post }) {
                 onBlur={props.handleBlur}
                 value={props.values.caption}
                 placeholder='Write a caption...'
-                className='editPost__caption__textarea'
+                className='editPost__caption'
                 maxLength={2200}
               ></textarea>
               {props.touched.caption && props.errors.caption ? (
