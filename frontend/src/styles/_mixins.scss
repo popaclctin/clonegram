@@ -1,5 +1,5 @@
 $breakpoints-up: (
-  'desktop': '64em' //1024px,,
+  'desktop': '64em' //1024px,
 );
 
 @mixin breakpoint-up($size) {

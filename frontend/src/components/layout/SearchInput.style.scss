@@ -2,16 +2,17 @@
 
 .header__search {
   position: relative;
+
   &__icon {
     position: absolute;
     top: 50%;
-    left: 5px;
+    left: 10px;
     transform: translateY(-50%);
   }
   &__input {
     border: 0;
-    background-color: variables.$bgColor;
-    padding: 0.25rem 1.5rem;
+    background-color: variables.$lightGrey;
+    padding: 0.3rem 2rem;
   }
 
   &__results {

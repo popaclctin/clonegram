@@ -1,7 +1,14 @@
-@use './variables';
+@use './variables' as v;
 
 body {
   font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
     'Helvetica Neue', sans-serif;
-  background-color: variables.$bgColor;
+  font-size: 100%;
+  background-color: v.$bgColor;
+}
+
+a,
+a:visited,
+a:active {
+  text-decoration: none;
 }

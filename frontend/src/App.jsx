@@ -13,7 +13,11 @@ function App() {
         <PrivateOutlet />
       </main>
       {createPortal(
-        <ToastContainer position='bottom-left' />,
+        <ToastContainer
+          position='bottom-left'
+          hideProgressBar={true}
+          autoClose={2000}
+        />,
         document.getElementById('toast')
       )}
     </Fragment>

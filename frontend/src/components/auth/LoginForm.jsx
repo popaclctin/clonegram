@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import { useLoginMutation } from '../../store/authSlice';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useFormik } from 'formik';
+import { Formik } from 'formik';
+import ServerError from '../utils/ServerError';
 import './AuthForm.style.scss';
-
-let errorMessage;
 
 function LoginForm() {
   const navigate = useNavigate();
@@ -20,20 +19,6 @@ function LoginForm() {
         : navigate('/', { replace: true });
     }
   }, [isSuccess]);
-
-  if (isError) {
-    if (error.data?.message === 'VALIDATION_ERROR') {
-      errorMessage = (
-        <ul>
-          {error.data.invalidParams.map((param, index) => (
-            <li key={index}>{param.message}</li>
-          ))}
-        </ul>
-      );
-    } else {
-      errorMessage = error.data?.message;
-    }
-  }
 
   const validate = (values) => {
     const errors = {};
@@ -56,58 +41,58 @@ function LoginForm() {
     return errors;
   };
 
-  const formik = useFormik({
-    initialValues: { email: 'bula@gmail.com', password: 'parola' },
-    validate,
-    onSubmit: (values, { setSubmitting }) => {
-      loginUser({ email: values.email, password: values.password });
-      setSubmitting(false);
-    },
-  });
-
   return (
     <section className='authForm'>
       <h1 className='authForm__title'>Clonegram</h1>
-      <form onSubmit={formik.handleSubmit}>
-        <input
-          type='email'
-          id='email'
-          name='email'
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.email}
-          placeholder='Email'
-          className='authForm__field'
-        />
-        <input
-          type='password'
-          id='password'
-          name='password'
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.password}
-          placeholder='Password'
-          className='authForm__field'
-        />
+      <Formik
+        initialValues={{ email: 'bula@gmail.com', password: 'parola' }}
+        validate={validate}
+        onSubmit={(values, { setSubmitting, resetForm }) => {
+          loginUser({ email: values.email, password: values.password });
+          resetForm();
+          setSubmitting(false);
+        }}
+      >
+        {(props) => (
+          <form onSubmit={props.handleSubmit}>
+            <input
+              type='email'
+              id='email'
+              name='email'
+              onChange={props.handleChange}
+              onBlur={props.handleBlur}
+              value={props.values.email}
+              placeholder='Email'
+              className='authForm__field'
+            />
+            <input
+              type='password'
+              id='password'
+              name='password'
+              onChange={props.handleChange}
+              onBlur={props.handleBlur}
+              value={props.values.password}
+              placeholder='Password'
+              className='authForm__field'
+            />
 
-        <button
-          type='submit'
-          className='authForm__submitBtn'
-          disabled={!formik.isValid}
-        >
-          Log In
-        </button>
-        {isError && <p className='authForm__error'>{errorMessage}</p>}
-        {formik.touched.email && formik.errors.email ? (
-          <p className='authForm__error'>{formik.errors.email}</p>
-        ) : null}
-        {formik.touched.password && formik.errors.password ? (
-          <p className='authForm__error'>{formik.errors.password}</p>
-        ) : null}
-      </form>
-      <a href='#' className='authForm__forgotPass'>
-        Forgotten your password?
-      </a>
+            <button
+              type='submit'
+              className='authForm__submitBtn'
+              disabled={!props.isValid}
+            >
+              Log In
+            </button>
+            {isError && <ServerError error={error} />}
+            {props.touched.email && props.errors.email ? (
+              <p className='authForm__error'>{props.errors.email}</p>
+            ) : null}
+            {props.touched.password && props.errors.password ? (
+              <p className='authForm__error'>{props.errors.password}</p>
+            ) : null}
+          </form>
+        )}
+      </Formik>
     </section>
   );
 }

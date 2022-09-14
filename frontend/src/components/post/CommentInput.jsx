@@ -18,8 +18,9 @@ export default function CommentInput({ postId }) {
     <Formik
       initialValues={{ comment: '' }}
       validate={validate}
-      onSubmit={(values, { setSubmitting }) => {
+      onSubmit={(values, { setSubmitting, resetForm }) => {
         createComment({ content: values.comment, postId });
+        resetForm();
         setSubmitting(false);
       }}
     >
