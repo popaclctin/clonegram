@@ -31,13 +31,6 @@
     }
   }
 
-  &__search {
-    display: none;
-  }
-
   @include m.breakpoint-up(desktop) {
-    &__search {
-      display: block;
-    }
   }
 }

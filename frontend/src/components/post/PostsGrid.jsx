@@ -7,8 +7,10 @@ import { API_URL } from '../../config/config';
 import './PostsGrid.style.scss';
 
 function PostsGrid({ posts }) {
-  return (
-    <section className='postsGrid'>
+  let content;
+
+  if (posts.length !== 0) {
+    content = (
       <ul>
         {posts.map((post) => (
           <li key={post._id}>
@@ -18,6 +20,15 @@ function PostsGrid({ posts }) {
           </li>
         ))}
       </ul>
+    );
+  } else {
+    content = <p className='postsGrid__noposts'>There are no posts</p>;
+  }
+
+  return (
+    <section className='postsGrid'>
+      <h3 className='postsGrid__title'>Posts</h3>
+      {content}
     </section>
   );
 }
