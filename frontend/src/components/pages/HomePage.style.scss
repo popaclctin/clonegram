@@ -1,7 +1,19 @@
-@use '../../styles/variables';
+@use '../../styles/mixins' as m;
 
 .homePage {
-  display: flex;
-  justify-content: center;
-  margin: variables.$pageMargin;
+  margin-top: 2rem;
+
+  .authUser {
+    display: none;
+  }
+
+  @include m.breakpoint-up(desktop) {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+
+    .authUser {
+      display: flex;
+    }
+  }
 }

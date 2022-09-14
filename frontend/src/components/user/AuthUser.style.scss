@@ -1,0 +1,36 @@
+@use '../../styles/variables' as v;
+
+.authUser {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  &__profileIcon {
+    display: flex;
+    align-items: center;
+    font-size: 2rem;
+    color: v.$lightGrey;
+
+    a {
+      &:visited {
+        color: inherit;
+      }
+
+      &:active {
+        opacity: 0.5;
+      }
+    }
+  }
+
+  &__info {
+    font-size: 0.875rem;
+  }
+
+  &__username {
+    font-weight: 600;
+  }
+
+  &__fullname {
+    color: v.$grey;
+  }
+}

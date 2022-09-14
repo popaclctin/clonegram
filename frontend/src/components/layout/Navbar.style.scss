@@ -11,11 +11,12 @@
     padding: 0;
     li {
       a {
-        text-decoration: none;
-
         &:visited {
-          color: transparent;
+          color: black;
         }
+      }
+      &:active {
+        opacity: 0.5;
       }
     }
   }
@@ -23,7 +24,6 @@
   &__userBtn {
     padding: 0;
     border: 0;
-    background-color: white;
 
     &:hover {
       cursor: pointer;
@@ -33,7 +33,6 @@
   &__createPostBtn {
     padding: 0;
     border: 0;
-    background-color: white;
 
     &:hover {
       cursor: pointer;
