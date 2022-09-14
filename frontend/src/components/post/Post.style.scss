@@ -1,36 +1,40 @@
-@use '../../styles/variables';
+@use '../../styles/variables' as v;
+@use '../../styles/mixins' as m;
 
 .post {
   $padding: 1rem;
+  $gutterClr: rgba(v.$lightGrey, 0.5);
 
   display: flex;
-  max-width: 58rem;
-  min-height: 28rem;
+  flex-direction: column;
+  max-width: 58.4375rem;
   font-size: 0.875rem;
   background-color: white;
-  border: 1px solid variables.$lightGrey;
-  border-radius: 3px;
 
   &__image {
     flex: 2;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: variables.$bgColor;
+    background-color: v.$bgColor;
   }
 
   &__body {
     flex: 1;
     margin: 0;
+    display: flex;
+    flex-direction: column;
   }
 
   &__header {
     display: flex;
     align-items: center;
-    // justify-content: space-between;
     column-gap: 1rem;
     padding: $padding;
-    border-bottom: 1px solid variables.$lightGrey;
+
+    &--desktop {
+      display: none;
+    }
   }
 
   &__author {
@@ -44,7 +48,7 @@
 
     &__icon {
       font-size: 1.75rem;
-      color: variables.$grey;
+      color: v.$grey;
     }
 
     &__username {
@@ -63,10 +67,9 @@
 
   &__comments {
     padding: $padding;
-    // flex-grow: 0;
-    height: 100%;
-    max-height: 25vh;
+    flex: 1 0 25vh;
     overflow: auto;
+    border-bottom: 1px solid $gutterClr;
 
     ul {
       margin: 0;
@@ -79,7 +82,7 @@
   }
 
   &__nocomments {
-    color: variables.$grey;
+    color: v.$grey;
   }
 
   &__footer {
@@ -100,9 +103,9 @@
 
     a {
       text-decoration: none;
-      color: variables.$grey;
+      color: v.$grey;
       &:visited {
-        color: variables.$grey;
+        color: v.$grey;
       }
       &:active {
         opacity: 0.5;
@@ -111,9 +114,28 @@
   }
 
   &__commentInput {
-    margin-top: auto;
     padding: $padding;
-    border-top: 1px solid variables.$lightGrey;
+    border-top: 1px solid $gutterClr;
+  }
+
+  @include m.breakpoint-up(desktop) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    border: 1px solid v.$lightGrey;
+    border-radius: 3px;
+
+    &__header {
+      display: none;
+
+      &--desktop {
+        display: flex;
+        border-bottom: 1px solid $gutterClr;
+      }
+    }
+
+    &__image {
+      min-height: 28.125rem;
+    }
   }
 }
 
@@ -123,7 +145,7 @@
 
   &__icon {
     font-size: 1.75rem;
-    color: variables.$grey;
+    color: v.$grey;
   }
 
   &__username {
@@ -133,6 +155,6 @@
 
   &__timeDistance {
     font-size: 0.75rem;
-    color: variables.$grey;
+    color: v.$grey;
   }
 }

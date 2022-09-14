@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 import { API_URL } from '../../config/config';
+import ServerError from '../utils/ServerError';
 
 function EditPost({ onClose, post }) {
   const auth = useAuth();
@@ -19,17 +20,6 @@ function EditPost({ onClose, post }) {
       onClose();
     }
   }, [isSuccess]);
-
-  let errorMessage;
-  if (isError) {
-    if (error.data.message === 'VALIDATION_ERROR') {
-      errorMessage = error.data.invalidParams.map((param, index) => (
-        <p key={index}>{param.message}</p>
-      ));
-    } else {
-      errorMessage = <p>{error.data.message}</p>;
-    }
-  }
 
   return (
     <Formik
@@ -53,7 +43,7 @@ function EditPost({ onClose, post }) {
             <button
               type='submit'
               className='editPost__submitBtn'
-              disabled={!props.isValid}
+              disabled={!(props.isValid && props.dirty)}
             >
               Done
             </button>
@@ -85,7 +75,7 @@ function EditPost({ onClose, post }) {
               ) : null}
             </div>
           </div>
-          {isError && <div>{errorMessage}</div>}
+          {isError && <ServerError error={error} />}
         </form>
       )}
     </Formik>

@@ -6,6 +6,7 @@ import './CreatePost.style.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
+import ServerError from '../utils/ServerError';
 
 function CreatePost({ onClose }) {
   const auth = useAuth();
@@ -18,17 +19,6 @@ function CreatePost({ onClose }) {
       onClose();
     }
   }, [isSuccess]);
-
-  let errorMessage;
-  if (isError) {
-    if (error.data.message === 'VALIDATION_ERROR') {
-      errorMessage = error.data.invalidParams.map((param, index) => (
-        <p key={index}>{param.message}</p>
-      ));
-    } else {
-      errorMessage = <p>{error.data.message}</p>;
-    }
-  }
 
   return (
     <Formik
@@ -90,7 +80,7 @@ function CreatePost({ onClose }) {
               ) : null}
             </div>
           </div>
-          {isError && <div>{errorMessage}</div>}
+          {isError && <ServerError error={error} />}
         </form>
       )}
     </Formik>

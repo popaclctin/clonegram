@@ -15,8 +15,6 @@ import CommentInput from './CommentInput';
 import './Post.style.scss';
 import FollowBtn from './FollowBtn';
 
-//TODO: implement edit
-
 function Post({ post }) {
   const {
     data: likesData,
@@ -70,11 +68,28 @@ function Post({ post }) {
         <OptionsModal onClose={() => setShowOptionsModal(false)} post={post} />
       )}
       <article className='post'>
+        <div className='post__header'>
+          <Link to={`/${post.user.username}`} className='post__author'>
+            <FontAwesomeIcon
+              icon={faCircleUser}
+              size='xl'
+              className='post__author__icon'
+            />
+            <p className='post__author__username'>{post.user.username}</p>
+          </Link>
+          <FollowBtn userId={post.user._id} />
+          <button
+            onClick={() => setShowOptionsModal(true)}
+            className='post__optionsBtn'
+          >
+            <FontAwesomeIcon icon={faEllipsis} />
+          </button>
+        </div>
         <div className='post__image'>
           <img src={`${API_URL}/uploads/${post.image.name}`} />
         </div>
         <div className='post__body'>
-          <div className='post__header'>
+          <div className='post__header post__header--desktop'>
             <Link to={`/${post.user.username}`} className='post__author'>
               <FontAwesomeIcon
                 icon={faCircleUser}

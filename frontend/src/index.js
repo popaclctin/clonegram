@@ -23,7 +23,6 @@ root.render(
           <Route index element={<HomePage />} />
           <Route path='post'>
             <Route path=':postId' element={<PostPage />} />
-            <Route path='create' element={<CreatePost />} />
           </Route>
           <Route path=':username' element={<UserPage />} />
         </Route>
