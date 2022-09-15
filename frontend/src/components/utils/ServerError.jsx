@@ -7,12 +7,12 @@ function ServerError({ error }) {
     content = (
       <ul>
         {error.data.invalidParams.map((param, index) => (
-          <li key={index}>{param.message}</li>
+          <li key={index}>{param.msg}</li>
         ))}
       </ul>
     );
   }
-  return <p className='serverError'>{content}</p>;
+  return <div className='serverError'>{content}</div>;
 }
 
 export default ServerError;

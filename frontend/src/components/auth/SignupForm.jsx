@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useSignupMutation } from '../../store/authSlice';
+import { useSignupMutation } from '../../store/apiSlice';
 import { useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
 import ServerError from '../utils/ServerError';
@@ -81,7 +81,6 @@ function SignupForm() {
             firstName: values.firstName,
             lastName: values.lastName,
           });
-          resetForm();
           setSubmitting(false);
         }}
       >

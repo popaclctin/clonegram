@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useLoginMutation } from '../../store/authSlice';
+import { useLoginMutation } from '../../store/apiSlice';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Formik } from 'formik';
 import ServerError from '../utils/ServerError';
@@ -49,7 +49,6 @@ function LoginForm() {
         validate={validate}
         onSubmit={(values, { setSubmitting, resetForm }) => {
           loginUser({ email: values.email, password: values.password });
-          resetForm();
           setSubmitting(false);
         }}
       >

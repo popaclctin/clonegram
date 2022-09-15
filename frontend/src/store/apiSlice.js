@@ -14,6 +14,17 @@ export const apiSlice = createApi({
   }),
   tagtypes: ['Post', 'Like', 'Comment', 'Follow'],
   endpoints: (build) => ({
+    login: build.mutation({
+      query: (body) => ({
+        url: '/auth/login',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: [{ type: 'Post', id: 'LIST' }],
+    }),
+    signup: build.mutation({
+      query: (body) => ({ url: '/auth/signup', method: 'POST', body }),
+    }),
     getUserPosts: build.query({
       query: (userId) => ({ url: `user/${userId}/posts` }),
       providesTags: (result = { posts: [] }, error, arg) => [
@@ -147,6 +158,8 @@ export const apiSlice = createApi({
 });
 
 export const {
+  useLoginMutation,
+  useSignupMutation,
   useGetUserPostsQuery,
   useGetPostByIdQuery,
   useCreatePostMutation,

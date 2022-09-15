@@ -1,22 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { apiSlice } from './apiSlice';
 
-export const extendedApiSlice = apiSlice.injectEndpoints({
-  endpoints: (build) => ({
-    login: build.mutation({
-      query: (body) => ({
-        url: '/auth/login',
-        method: 'POST',
-        body,
-      }),
-      invalidatesTags: (result, error, arg) => [{ type: 'Post', id: 'LIST' }],
-    }),
-    signup: build.mutation({
-      query: (body) => ({ url: '/auth/signup', method: 'POST', body }),
-    }),
-  }),
-});
-
 const slice = createSlice({
   name: 'auth',
   initialState: { user: null, token: null },
@@ -35,7 +19,7 @@ const slice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addMatcher(
-      extendedApiSlice.endpoints.login.matchFulfilled,
+      apiSlice.endpoints.login.matchFulfilled,
       (state, action) => {
         const {
           payload: { user, token },
@@ -46,8 +30,6 @@ const slice = createSlice({
     );
   },
 });
-
-export const { useLoginMutation, useSignupMutation } = extendedApiSlice;
 
 export const { setCredentials, resetCredentials } = slice.actions;
 

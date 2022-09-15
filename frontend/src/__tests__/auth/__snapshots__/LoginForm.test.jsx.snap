@@ -34,12 +34,6 @@ exports[`<LoginForm /> renders correctly 1`] = `
         Log In
       </button>
     </form>
-    <a
-      class="authForm__forgotPass"
-      href="#"
-    >
-      Forgotten your password?
-    </a>
   </section>
 </DocumentFragment>
 `;

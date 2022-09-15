@@ -8,8 +8,6 @@ exports[`<Navbar /> renders correctly 1`] = `
     <ul>
       <li>
         <a
-          aria-current="page"
-          class="active"
           href="/"
         >
           <svg
