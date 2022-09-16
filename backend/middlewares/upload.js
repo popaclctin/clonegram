@@ -1,9 +1,13 @@
+import fs from 'fs';
+
 const multer = require('multer');
 const createHttpError = require('http-errors');
 const path = require('path');
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
+    const path = path.resolve(__dirname, './../public/uploads');
+    fs.mkdirSync(path, { recursive: true });
     cb(null, path.resolve(__dirname, './../public/uploads'));
   },
   filename: function (req, file, cb) {
