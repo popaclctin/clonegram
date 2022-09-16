@@ -7,7 +7,6 @@ import { Provider } from 'react-redux';
 import LoginPage from './components/pages/LoginPage';
 import SignupPage from './components/pages/SignupPage';
 import HomePage from './components/pages/HomePage';
-import CreatePost from './components/post/CreatePost';
 import PostPage from './components/pages/PostPage';
 import './styles/style.scss';
 import UserPage from './components/pages/UserPage';
