@@ -1,5 +1,4 @@
-import fs from 'fs';
-
+const fs = require('fs');
 const multer = require('multer');
 const createHttpError = require('http-errors');
 const path = require('path');
