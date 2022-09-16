@@ -4,7 +4,7 @@
   "description": "Node.js RESTful CRUD API with Express and MongoDB",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "node server.js",
     "test": "jest",
     "debug": "nodemon --inspect=0.0.0.0 server.js"
   },
