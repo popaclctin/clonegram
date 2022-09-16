@@ -5,11 +5,11 @@ const path = require('path');
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    const path = path.resolve(__dirname, './../public/uploads');
-    if (!fs.existsSync(path)) {
-      fs.mkdirSync(path);
+    const uploadsPath = path.resolve(__dirname, './../public/uploads');
+    if (!fs.existsSync(uploadsPath)) {
+      fs.mkdirSync(uploadsPath);
     }
-    cb(null, path.resolve(__dirname, './../public/uploads'));
+    cb(null, uploadsPath);
   },
   filename: function (req, file, cb) {
     const uniqueFileName =

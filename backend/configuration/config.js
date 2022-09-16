@@ -20,8 +20,6 @@ if (DB_NAME) {
   dbURL.pathname = DB_NAME;
 }
 
-console.log(dbURL.toString());
-
 const config = {
   env: process.env.NODE_ENV || 'development',
   port: process.env.NODE_DOCKER_PORT || 8080,
