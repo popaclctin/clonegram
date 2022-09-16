@@ -11,10 +11,10 @@ const app = express();
 
 app.use(morgan('dev'));
 
-const corsOptions = {
-  origin: ['http://localhost:3000', `http://localhost:${config.port}`],
-};
-app.use(cors(corsOptions));
+// const corsOptions = {
+//   origin: ['http://localhost:3000', `http://localhost:${config.port}`],
+// };
+app.use(cors());
 //parse requests of type application/json
 app.use(express.json());
 //parse requests of type application/x-www-form-urlencoded

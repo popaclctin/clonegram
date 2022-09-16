@@ -6,7 +6,6 @@ module.exports.connect = connect;
 module.exports.disconnect = disconnect;
 
 function connect() {
-  console.log(dbUrl);
   mongoose
     .connect(dbUrl, {
       useNewUrlParser: true,
