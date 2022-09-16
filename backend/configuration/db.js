@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { dbUrl } = require('./config');
+const { dbURL } = require('./config');
 
 module.exports.mongoose = mongoose;
 module.exports.connect = connect;
@@ -7,7 +7,7 @@ module.exports.disconnect = disconnect;
 
 function connect() {
   mongoose
-    .connect(dbUrl, {
+    .connect(dbURL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     })
