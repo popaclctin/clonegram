@@ -3,6 +3,7 @@ import { useSignupMutation } from '../../store/apiSlice';
 import { useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
 import ServerError from '../utils/ServerError';
+import LoadingSpinner from '../ui/LoadingSpinner';
 import './AuthForm.style.scss';
 
 function SignupForm() {
@@ -157,7 +158,7 @@ function SignupForm() {
               className='authForm__submitBtn'
               disabled={!(props.isValid && props.dirty)}
             >
-              Signup
+              {isLoading ? <LoadingSpinner /> : 'Signup'}
             </button>
             {isError && <ServerError error={error} />}
             {props.touched.email && props.errors.email ? (

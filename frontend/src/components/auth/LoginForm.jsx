@@ -3,6 +3,7 @@ import { useLoginMutation } from '../../store/apiSlice';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Formik } from 'formik';
 import ServerError from '../utils/ServerError';
+import LoadingSpinner from '../ui/LoadingSpinner';
 import './AuthForm.style.scss';
 
 function LoginForm() {
@@ -80,7 +81,7 @@ function LoginForm() {
               className='authForm__submitBtn'
               disabled={!props.isValid}
             >
-              Log In
+              {isLoading ? <LoadingSpinner /> : 'Log In'}
             </button>
             {isError && <ServerError error={error} />}
             {props.touched.email && props.errors.email ? (

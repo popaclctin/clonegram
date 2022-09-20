@@ -4,6 +4,7 @@ const ObjectId = require('mongoose').Types.ObjectId;
 
 const Post = require('../models/Post');
 const Like = require('../models/Like');
+const Comment = require('../models/Comment');
 
 module.exports.getPosts = getPosts;
 module.exports.createPost = createPost;
@@ -169,6 +170,9 @@ async function deletePost(req, res, next) {
 
   try {
     await Post.deleteOne({ _id: postId });
+    await Like.deleteMany({ post: postId });
+    await Comment.deleteMany({ post: postId });
+
     res.status(200).json({ message: 'Post deleted' });
   } catch (err) {
     return next(createHttpError(500, err));
