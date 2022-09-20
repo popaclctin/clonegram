@@ -28,6 +28,7 @@ services:
       - JWT_EXPIRESIN=$JWT_EXPIRESIN
     volumes:
       - ./backend:/backend
+    command: npm run debug
   frontend:
     depends_on:
       - backend

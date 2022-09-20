@@ -3,6 +3,7 @@ const createHttpError = require('http-errors');
 
 const User = require('../models/User');
 const Post = require('../models/Post');
+const Follow = require('../models/Follow');
 
 module.exports.getFeed = getFeed;
 
@@ -18,11 +19,15 @@ async function getFeed(req, res, next) {
   const { page = 1, limit = 10 } = req.query;
 
   try {
-    const user = await User.findById(req.user._id).exec();
+    const following = await Follow.find(
+      { follower: userId },
+      'followee'
+    ).exec();
 
-    //FIXME: find the user's followers
+    const followingIds = following.map((follow) => follow.followee);
+
     const feedPosts = await Post.find({
-      $or: [{ user: { $in: user.following } }, { user: userId }],
+      $or: [{ user: { $in: followingIds } }, { user: userId }],
     })
       .populate({ path: 'user', select: 'username' })
       .sort({ createdAt: -1 })
@@ -31,7 +36,7 @@ async function getFeed(req, res, next) {
       .exec();
 
     const count = await Post.find({
-      user: { $in: user.following },
+      $or: [{ user: { $in: followingIds } }, { user: userId }],
     }).countDocuments();
 
     res.status(200).json({
