@@ -8,6 +8,7 @@ import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 import { API_URL } from '../../config/config';
 import ServerError from '../utils/ServerError';
+import LoadingSpinner from '../ui/LoadingSpinner';
 
 function EditPost({ onClose, post }) {
   const auth = useAuth();
@@ -45,7 +46,7 @@ function EditPost({ onClose, post }) {
               className='editPost__submitBtn'
               disabled={!(props.isValid && props.dirty)}
             >
-              Done
+              {isLoading ? <LoadingSpinner /> : 'Done'}
             </button>
           </div>
           <div className='editPost__body'>

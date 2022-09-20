@@ -18,8 +18,8 @@ function FollowBtn({ userId }) {
     followeeId: userId,
   });
 
-  const [followUser] = useCreateFollowMutation();
-  const [unfollowUser] = useDeleteFollowMutation();
+  const [followUser, { isLoadingFollow }] = useCreateFollowMutation();
+  const [unfollowUser, { isLoadingUnfollow }] = useDeleteFollowMutation();
 
   let content;
 
@@ -33,7 +33,11 @@ function FollowBtn({ userId }) {
           unfollowUser(data.follow._id);
         }}
       >
-        <FontAwesomeIcon icon={faUserCheck} />
+        {isLoadingUnfollow ? (
+          <LoadingSpinner />
+        ) : (
+          <FontAwesomeIcon icon={faUserCheck} />
+        )}
       </button>
     );
   } else if (isError) {
@@ -45,7 +49,7 @@ function FollowBtn({ userId }) {
             followUser({ userId });
           }}
         >
-          Follow
+          {isLoadingFollow ? <LoadingSpinner /> : 'Follow'}
         </button>
       ) : (
         <p>{JSON.stringify(error)}</p>

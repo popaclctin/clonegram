@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 import ServerError from '../utils/ServerError';
+import LoadingSpinner from '../ui/LoadingSpinner';
 
 function CreatePost({ onClose }) {
   const auth = useAuth();
@@ -52,7 +53,7 @@ function CreatePost({ onClose }) {
               className='createPost__submitBtn'
               disabled={!(props.dirty && props.isValid)}
             >
-              Share
+              {isLoading ? <LoadingSpinner /> : 'Share'}
             </button>
           </div>
           <div className='createPost__body'>

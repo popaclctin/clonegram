@@ -46,7 +46,7 @@ function LoginForm() {
     <section className='authForm'>
       <h1 className='authForm__title'>Clonegram</h1>
       <Formik
-        initialValues={{ email: 'bula@gmail.com', password: 'parola' }}
+        initialValues={{ email: '', password: '' }}
         validate={validate}
         onSubmit={(values, { setSubmitting, resetForm }) => {
           loginUser({ email: values.email, password: values.password });
