@@ -11,6 +11,11 @@
   font-size: 0.875rem;
   background-color: white;
 
+  a:link,
+  a:visited {
+    color: inherit;
+  }
+
   &__image {
     flex: 2;
     display: flex;
