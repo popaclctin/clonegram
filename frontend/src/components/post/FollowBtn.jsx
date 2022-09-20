@@ -18,8 +18,10 @@ function FollowBtn({ userId }) {
     followeeId: userId,
   });
 
-  const [followUser, { isLoadingFollow }] = useCreateFollowMutation();
-  const [unfollowUser, { isLoadingUnfollow }] = useDeleteFollowMutation();
+  const [followUser, { isLoading: isLoadingFollow }] =
+    useCreateFollowMutation();
+  const [unfollowUser, { isLoading: isLoadingUnfollow }] =
+    useDeleteFollowMutation();
 
   let content;
 

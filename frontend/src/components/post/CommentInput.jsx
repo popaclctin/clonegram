@@ -1,10 +1,11 @@
 import { Formik } from 'formik';
 import React from 'react';
 import { useCreateCommentMutation } from '../../store/apiSlice';
+import LoadingSpinner from '../ui/LoadingSpinner';
 import './CommentInput.style.scss';
 
 export default function CommentInput({ postId }) {
-  const [createComment] = useCreateCommentMutation();
+  const [createComment, { isLoading }] = useCreateCommentMutation();
 
   const validate = (values) => {
     const errors = {};
@@ -46,7 +47,7 @@ export default function CommentInput({ postId }) {
             disabled={!(props.isValid && props.dirty)}
             className='commentInput__submitBtn'
           >
-            Post
+            {isLoading ? <LoadingSpinner /> : 'Post'}
           </button>
         </form>
       )}
