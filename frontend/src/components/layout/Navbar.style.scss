@@ -11,7 +11,8 @@
     padding: 0;
     li {
       a {
-        &:visited {
+        &:visited,
+        &:link {
           color: black;
         }
       }
